@@ -6,7 +6,6 @@ import {
   ButtonBase,
   useTheme,
 } from '@native-ammv3/components';
-import { Error } from '@native-ammv3/icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';

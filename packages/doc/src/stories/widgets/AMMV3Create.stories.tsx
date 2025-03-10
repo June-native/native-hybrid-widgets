@@ -31,4 +31,34 @@ Primary.args = {
   noDocumentLink: true,
   // onlyChainId: 1,
   noUI: true,
+  tokenList: [
+    {
+      address: '0x8f2a9f23d5d70226491B0c10365dE88f64cD4a01',
+      decimals: 18,
+      symbol: 'TK1A',
+      name: 'TK1A',
+      chainId: 11155111,
+    },
+    {
+      address: '0xd05553BC85FA8c004073d91097B7611CD5E478f5',
+      decimals: 6,
+      symbol: 'USDT-A',
+      name: 'usdtA',
+      chainId: 11155111,
+    },
+    {
+      address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
+      decimals: 18,
+      symbol: 'uni_test2',
+      name: 'uni_test2',
+      chainId: 11155111,
+    },
+    {
+      address: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
+      decimals: 6,
+      symbol: 'uni_test3',
+      name: 'uni_test3',
+      chainId: 11155111,
+    },
+  ],
 };
