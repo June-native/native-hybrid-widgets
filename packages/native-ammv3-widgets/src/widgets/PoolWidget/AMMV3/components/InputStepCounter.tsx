@@ -82,7 +82,7 @@ const StepCounter = ({
       onFocus={handleOnFocus}
       onBlur={handleOnBlur}
       sx={{
-        width: '100%',
+        // width: '100%',
         py: 12,
         px: 20,
         borderRadius: 16,

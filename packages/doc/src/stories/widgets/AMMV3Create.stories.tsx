@@ -30,4 +30,5 @@ Primary.args = {
   height: '100%',
   noDocumentLink: true,
   // onlyChainId: 1,
+  noUI: true,
 };

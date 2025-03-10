@@ -1,10 +1,4 @@
-import { SwapWidgetApi } from '@native-ammv3/api';
-import {
-  AMMV3PositionsView,
-  SwapWidgetProps,
-  Widget,
-} from '@native-ammv3/widgets';
-import React from 'react';
+import { AMMV3PositionsView, Widget } from '@native-ammv3/widgets';
 
 export default {
   title: 'Widgets/AMMV3PositionsView',
@@ -12,21 +6,10 @@ export default {
 };
 
 export const Primary = (props: any) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
-  const { projectId, apiKey, ...other } = props;
-  React.useEffect(() => {
-    if (projectId && apiKey) {
-      const dodoService = new SwapWidgetApi();
-      dodoService
-        .getConfigSwapWidgetProps(projectId, apiKey)
-        .then(({ swapWidgetProps }) => {
-          setConfig(swapWidgetProps);
-        });
-    }
-  }, [projectId, apiKey]);
+  const { apiKey, ...other } = props;
 
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...other} apikey={apiKey}>
       <AMMV3PositionsView
         chainId={11155111}
         baseToken={{

@@ -1,6 +1,6 @@
 {
   "name": "@native-ammv3/widgets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NATIVE Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
