@@ -1,6 +1,4 @@
-import { SwapWidgetApi } from '@dodoex/api';
-import { AddLiquidityV3, SwapWidgetProps, Widget } from '@dodoex/widgets';
-import React from 'react';
+import { AddLiquidityV3, Widget } from '@native-ammv3/widgets';
 
 export default {
   title: 'Widgets/AddLiquidityV3',
@@ -8,21 +6,10 @@ export default {
 };
 
 export const Primary = (props: any) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
-  const { projectId, apiKey, ...other } = props;
-  React.useEffect(() => {
-    if (projectId && apiKey) {
-      const dodoService = new SwapWidgetApi();
-      dodoService
-        .getConfigSwapWidgetProps(projectId, apiKey)
-        .then(({ swapWidgetProps }) => {
-          setConfig(swapWidgetProps);
-        });
-    }
-  }, [projectId, apiKey]);
+  const { apiKey, ...other } = props;
 
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...other} apikey={apiKey}>
       <AddLiquidityV3
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}

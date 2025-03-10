@@ -1,5 +1,9 @@
-import { SwapWidgetApi } from '@dodoex/api';
-import { AMMV3PositionsView, SwapWidgetProps, Widget } from '@dodoex/widgets';
+import { SwapWidgetApi } from '@native-ammv3/api';
+import {
+  AMMV3PositionsView,
+  SwapWidgetProps,
+  Widget,
+} from '@native-ammv3/widgets';
 import React from 'react';
 
 export default {

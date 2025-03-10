@@ -2,7 +2,7 @@ import { RootPage } from '../src/components/RootPage';
 import React, { Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setColorMode } from '../src/configure-store/actions/settings';
-import { Box } from '@dodoex/components';
+import { Box } from '@native-ammv3/components';
 
 const SwitchTheme = ({ themeMode }) => {
   const dispatch = useDispatch();

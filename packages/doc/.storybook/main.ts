@@ -45,17 +45,20 @@ const config: StorybookConfig = {
       resolve: {
         ...config.resolve,
         alias: {
-          '@dodoex/components': path.resolve(
+          '@native-ammv3/components': path.resolve(
             __dirname,
-            '../../dodoex-components',
+            '../../native-ammv3-components',
             'src/',
           ),
-          '@dodoex/widgets': path.resolve(
+          '@native-ammv3/widgets': path.resolve(
             __dirname,
-            '../../dodoex-widgets',
+            '../../native-ammv3-widgets',
             'src/',
           ),
-          '@dodoex/icons': path.resolve(__dirname, '../../dodoex-icons'),
+          '@native-ammv3/icons': path.resolve(
+            __dirname,
+            '../../native-ammv3-icons',
+          ),
           ...config.resolve?.alias,
         },
         fallback: {

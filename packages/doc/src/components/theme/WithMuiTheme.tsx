@@ -3,7 +3,7 @@ import {
   ThemeProvider,
   createTheme,
   PaletteMode,
-} from '@dodoex/components';
+} from '@native-ammv3/components';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
 import {

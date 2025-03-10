@@ -1,8 +1,8 @@
 {
   "name": "widgets",
-  "description": "DODOEX Widgets",
-  "homepage": "https://github.com/DODOEX/widgets#readme",
-  "repository": "https://github.com/DODOEX/widgets",
+  "description": "NATIVE Widgets",
+  "homepage": "https://github.com/NATIVE/widgets#readme",
+  "repository": "https://github.com/NATIVE/widgets",
   "files": [
     "dist"
   ],
@@ -13,8 +13,8 @@
     "tsc": "lerna run typescript",
     "test": "lerna run test",
     "test:e2e": "lerna run test:e2e",
-    "build": "yarn workspace @dodoex/icons build && yarn workspace @dodoex/components build && yarn workspace @dodoex/api build && yarn workspace @dodoex/widgets build",
-    "release": "yarn run build && yarn workspace @dodoex/widgets release",
+    "build": "yarn workspace @native-ammv3/icons build && yarn workspace @native-ammv3/components build && yarn workspace @native-ammv3/api build && yarn workspace @native-ammv3/widgets build",
+    "release": "yarn run build && yarn workspace @native-ammv3/widgets release",
     "build-doc": "yarn run build && yarn workspace doc build"
   },
   "workspaces": [
