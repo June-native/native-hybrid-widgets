@@ -135,7 +135,7 @@ export function usePools(
         PoolCache.getPoolAddress(v3CoreFactoryAddress, ...value, chainId),
     );
   }, [chainId, poolTokens]);
-
+  console.log('v2 poolAddresses', poolAddresses);
   const { data: slot0s } = useQueries({
     queries: poolAddresses.map((poolAddress) => {
       return ammV3Api.getV3PoolSlot0(chainId, poolAddress);

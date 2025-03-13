@@ -21,6 +21,8 @@ export function poolInitCodeHash(chainId?: ChainId): string {
   switch (chainId) {
     case ChainId.SEPOLIA:
       return '0x4509fa1e2d1989ac1632a56fe87c53e8d1e9d05847694e00f62b23e28cec98c4';
+    case ChainId.MAINNET:
+      return '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
     default:
       return POOL_INIT_CODE_HASH;
   }

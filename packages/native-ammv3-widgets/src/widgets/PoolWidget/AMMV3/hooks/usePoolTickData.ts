@@ -1,21 +1,36 @@
-import { AMMV3Api, ChainId, TickData, Ticks } from '@native-ammv3/api';
+import { ChainId } from '@native-ammv3/api';
 import { useQuery } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { useEffect, useMemo, useState } from 'react';
-import { ThegraphKeyMap } from '../../../../constants/chains';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import { useGraphQLRequests } from '../../../../hooks/useGraphQLRequests';
 import {
+  CHAIN_TO_ADDRESSES_MAP,
   Currency,
   Price,
   Token,
   V3_CORE_FACTORY_ADDRESSES,
 } from '../sdks/sdk-core';
-import { FeeAmount, Pool, TICK_SPACINGS, tickToPrice } from '../sdks/v3-sdk';
+import {
+  computePoolAddress,
+  FeeAmount,
+  TICK_SPACINGS,
+  tickToPrice,
+} from '../sdks/v3-sdk';
 import computeSurroundingTicks from '../utils/computeSurroundingTicks';
 import { PoolState, usePool } from './usePools';
 
 const PRICE_FIXED_DIGITS = 8;
+const tick = {
+  id: '0x5777d92f208679db4b9778590fa3cab3ac9e2168#1',
+  liquidityNet: '-10000499987500624950939',
+  poolAddress: '0x5777d92f208679db4b9778590fa3cab3ac9e2168',
+  price0: '1.0001',
+  price1: '0.99990000999900009999000099990001',
+  tickIdx: '1',
+};
+const ticksResponse = {
+  ticks: [tick],
+};
 
 // Tick with fields parsed to JSBIs, and active liquidity computed.
 export interface TickProcessed {
@@ -43,33 +58,35 @@ function usePaginatedTickQuery(
   skip = 0,
   chainId: ChainId,
 ) {
-  const graphQLRequests = useGraphQLRequests();
-
   const poolAddress =
     currencyA && currencyB && feeAmount
-      ? Pool.getAddress(
-          currencyA?.wrapped,
-          currencyB?.wrapped,
-          feeAmount,
-          undefined,
-          chainId ? V3_CORE_FACTORY_ADDRESSES[chainId] : undefined,
-        )
+      ? computePoolAddress({
+          tokenA: currencyA?.wrapped,
+          tokenB: currencyB?.wrapped,
+          fee: feeAmount,
+          chainId,
+          factoryAddress: V3_CORE_FACTORY_ADDRESSES[chainId],
+        })
       : undefined;
 
-  const query = graphQLRequests.getQuery(AMMV3Api.graphql.AllV3TicksDocument, {
-    skip,
-    first: MAX_TICK_FETCH_VALUE,
-    where: {
-      chain: chainId ? ThegraphKeyMap[chainId] : undefined,
-      poolAddress: poolAddress?.toLowerCase() ?? undefined,
-      refreshNow: true,
-      schemaName: 'ammv3',
-    },
-  });
-
   const result = useQuery({
-    ...query,
-    enabled: true,
+    queryKey: ['ticks', chainId, poolAddress, skip],
+    queryFn: async () => {
+      const theGraphUrl = CHAIN_TO_ADDRESSES_MAP[chainId]?.theGraphUrl;
+      if (!theGraphUrl) {
+        return null;
+      }
+
+      const response = await fetch(theGraphUrl, {
+        body: `{"query":"query Ticks($skip: Int, $first: Int, $where: Tick_filter) {\\n  ticks(skip: $skip, first: $first, where: $where) {\\n    id\\n    poolAddress\\n    tickIdx\\n    liquidityNet\\n    price0\\n    price1\\n  }\\n}","variables":{"skip":${skip},"first":${MAX_TICK_FETCH_VALUE},"where":{"poolAddress":"${
+          poolAddress?.toLowerCase() ?? ''
+        }","liquidityNet_not":0},"orderBy":"tickIdx"},"operationName":"Ticks"}`,
+        method: 'POST',
+      });
+      const data = await response.json();
+      return data.data as typeof ticksResponse;
+    },
+    enabled: !!poolAddress,
   });
   return result;
 }
@@ -80,13 +97,9 @@ function useAllV3Ticks(
   currencyB: Currency | undefined,
   feeAmount: FeeAmount | undefined,
   chainId: ChainId,
-): {
-  isLoading: boolean;
-  error: unknown;
-  ticks?: TickData[];
-} {
+) {
   const [skipNumber, setSkipNumber] = useState(0);
-  const [tickData, setTickData] = useState<Ticks>([]);
+  const [tickData, setTickData] = useState<(typeof ticksResponse)['ticks']>([]);
   const { data, error, isLoading } = usePaginatedTickQuery(
     currencyA,
     currencyB,
@@ -94,7 +107,7 @@ function useAllV3Ticks(
     skipNumber,
     chainId,
   );
-  const ticks: Ticks = data?.ticks as Ticks;
+  const ticks = data?.ticks;
 
   useEffect(() => {
     if (ticks?.length) {
@@ -169,30 +182,33 @@ export function usePoolActiveLiquidity(
     // find where the active tick would be to partition the array
     // if the active tick is initialized, the pivot will be an element
     // if not, take the previous tick as pivot
+    console.log('v2 ticks', ticks);
+    console.log('v2 activeTick', activeTick);
     const pivot =
       ticks.findIndex(
-        (tickData) => tickData?.tickIdx && tickData.tickIdx > activeTick,
+        (tickData) =>
+          tickData?.tickIdx && Number(tickData.tickIdx) > activeTick,
       ) - 1;
 
-    if (pivot < 0) {
-      // consider setting a local error
-      console.log(
-        'usePoolTickData',
-        'usePoolActiveLiquidity',
-        'TickData pivot not found',
-        {
-          token0: token0.address,
-          token1: token1.address,
-          chainId: token0.chainId,
-        },
-      );
-      return {
-        isLoading,
-        error,
-        activeTick,
-        data: undefined,
-      };
-    }
+    // if (pivot < 0) {
+    //   // consider setting a local error
+    //   console.log(
+    //     'usePoolTickData',
+    //     'usePoolActiveLiquidity',
+    //     'TickData pivot not found',
+    //     {
+    //       token0: token0.address,
+    //       token1: token1.address,
+    //       chainId: token0.chainId,
+    //     },
+    //   );
+    //   return {
+    //     isLoading,
+    //     error,
+    //     activeTick,
+    //     data: undefined,
+    //   };
+    // }
 
     const sdkPrice = tickToPrice(token0, token1, activeTick);
     const activeTickProcessed: TickProcessed = {
