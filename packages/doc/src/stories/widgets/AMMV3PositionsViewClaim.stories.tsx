@@ -1,7 +1,7 @@
 import { AMMV3PositionsView, Widget } from '@native-ammv3/widgets';
 
 export default {
-  title: 'Widgets/AMMV3PositionsView',
+  title: 'Widgets/AMMV3PositionsViewClaim',
   component: 'div',
 };
 
@@ -33,7 +33,7 @@ export const Primary = (props: any) => {
         token0Address="0x163D876AF3949f45D934870a1783A040Cf717Bc5"
         token1Address="0x444d30Eeb001Dc8B7B96cEF088381418B82f9441"
         feeAmount={500}
-        viewType="add-remove"
+        viewType="claim"
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
           window.alert('handleGoToAddLiquidityV3')

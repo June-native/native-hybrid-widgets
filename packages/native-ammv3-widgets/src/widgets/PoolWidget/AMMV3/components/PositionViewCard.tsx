@@ -71,23 +71,23 @@ export function getPriceOrderingFromPositionForUI(
 
 export interface PositionViewCardProps {
   p: PositionDetails;
-  currency0: Currency | undefined;
-  currency1: Currency | undefined;
-  onClickManage: () => void;
+  currencyA: Currency | undefined;
+  currencyB: Currency | undefined;
+  onClickManage: (type: 'add' | 'remove') => void;
 }
 
 export const PositionViewCard = ({
   p,
-  currency0,
-  currency1,
+  currencyA,
+  currencyB,
   onClickManage,
 }: PositionViewCardProps) => {
   const theme = useTheme();
 
   // construct Position from details returned
   const [, pool] = usePool(
-    currency0 ?? undefined,
-    currency1 ?? undefined,
+    currencyA ?? undefined,
+    currencyB ?? undefined,
     p.fee,
   );
 
@@ -121,7 +121,7 @@ export const PositionViewCard = ({
     ? pool.tickCurrent < p.tickLower || pool.tickCurrent >= p.tickUpper
     : false;
 
-  const sorted = currency0 === currency0;
+  const sorted = currencyA === currencyA;
   const price = sorted
     ? position?.pool.priceOf(position?.pool.token0)
     : position?.pool.priceOf(position?.pool.token1);
@@ -239,14 +239,24 @@ export const PositionViewCard = ({
           </Box>
         </Box>
       </Box>
-      <Button
-        variant={Button.Variant.outlined}
-        size={Button.Size.small}
-        fullWidth
-        onClick={onClickManage}
-      >
-        {t`Manage`}
-      </Button>
+      <Box>
+        <Button
+          variant={Button.Variant.outlined}
+          size={Button.Size.small}
+          fullWidth
+          onClick={() => onClickManage('add')}
+        >
+          Add Liquidity
+        </Button>
+        <Button
+          variant={Button.Variant.outlined}
+          size={Button.Size.small}
+          fullWidth
+          onClick={() => onClickManage('remove')}
+        >
+          Remove Liquidity
+        </Button>
+      </Box>
     </Box>
   );
 };

@@ -1,14 +1,14 @@
-import { ChainId } from '@native-ammv3/api';
+import { t } from '@lingui/macro';
 import { Box, Button, EmptyDataIcon, useTheme } from '@native-ammv3/components';
 import { Error } from '@native-ammv3/icons';
-import { t } from '@lingui/macro';
+import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
-import Dialog from '../../../components/Dialog';
+import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
-import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
-import { TokenInfo } from '../../../hooks/Token/type';
-import { AMMV3PositionManage } from './AMMV3PositionManage';
+import { AMMV3PositionAdd } from './AMMV3PositionAdd';
+import { AMMV3PositionRemove } from './AMMV3PositionRemove';
+import { PositionClaimCard } from './components/PositionClaimCard';
 import { PositionViewCard } from './components/PositionViewCard';
 import { useV3Positions } from './hooks/useV3Positions';
 import { FeeAmount } from './sdks/v3-sdk';
@@ -16,10 +16,10 @@ import { PositionDetails } from './types/position';
 import { areAddressesEqual, buildCurrency } from './utils';
 
 export interface AMMV3PositionsViewProps {
-  chainId: ChainId;
-  baseToken: TokenInfo;
-  quoteToken: TokenInfo;
+  token0Address: string;
+  token1Address: string;
   feeAmount: FeeAmount;
+  viewType: 'add-remove' | 'claim';
   onClose: (() => void) | undefined;
   handleGoToAddLiquidityV3: (params: {
     from?: string;
@@ -29,27 +29,44 @@ export interface AMMV3PositionsViewProps {
 }
 
 export const AMMV3PositionsView = ({
-  chainId,
-  baseToken,
-  quoteToken,
+  token0Address,
+  token1Address,
   feeAmount,
+  viewType,
   onClose,
   handleGoToAddLiquidityV3,
 }: AMMV3PositionsViewProps) => {
-  const { isMobile } = useWidgetDevice();
   const theme = useTheme();
 
-  const { account } = useWalletInfo();
+  const { account, chainId } = useWalletInfo();
 
   const { positions, loading } = useV3Positions(account, chainId);
 
+  const defaultToken0Query = useQuery({
+    ...tokenApi.getFetchTokenQuery(chainId, token0Address, account),
+  });
+  const defaultToken1Query = useQuery({
+    ...tokenApi.getFetchTokenQuery(chainId, token1Address, account),
+  });
+
+  const [manageItem, setManageItem] = useState<{
+    item: PositionDetails;
+    type: 'add' | 'remove';
+  } | null>(null);
+
   const currencyA = useMemo(
-    () => (baseToken ? buildCurrency(baseToken) : undefined),
-    [baseToken],
+    () =>
+      defaultToken0Query.data
+        ? buildCurrency(defaultToken0Query.data)
+        : undefined,
+    [defaultToken0Query],
   );
   const currencyB = useMemo(
-    () => (quoteToken ? buildCurrency(quoteToken) : undefined),
-    [quoteToken],
+    () =>
+      defaultToken1Query.data
+        ? buildCurrency(defaultToken1Query.data)
+        : undefined,
+    [defaultToken1Query],
   );
 
   const [tokenA, tokenB] = useMemo(
@@ -79,209 +96,180 @@ export const AMMV3PositionsView = ({
     );
   }, [feeAmount, positions, token0?.address, token1?.address]);
 
-  const [manageItem, setManageItem] = useState<PositionDetails | null>(null);
+  if (manageItem !== null) {
+    if (manageItem.type === 'add') {
+      return (
+        <AMMV3PositionAdd
+          currencyA={currencyA}
+          currencyB={currencyB}
+          feeAmount={feeAmount}
+          tokenId={manageItem.item.tokenId}
+          chainId={chainId}
+          onClose={() => {
+            setManageItem(null);
+          }}
+        />
+      );
+    }
 
-  const content = useMemo(() => {
-    return (
+    if (manageItem.type === 'remove') {
+      return (
+        <AMMV3PositionRemove
+          currencyA={currencyA}
+          currencyB={currencyB}
+          feeAmount={feeAmount}
+          tokenId={manageItem.item.tokenId}
+          chainId={chainId}
+          onClose={() => {
+            setManageItem(null);
+          }}
+        />
+      );
+    }
+  }
+
+  return (
+    <Box
+      sx={{
+        p: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 16,
+        borderRadius: 16,
+        backgroundColor: theme.palette.background.paper,
+        minHeight: 480,
+      }}
+    >
       <Box
         sx={{
-          p: 20,
+          pb: 16,
+          borderBottomColor: theme.palette.border.main,
+          borderBottomStyle: 'solid',
+          borderBottomWidth: 1,
           display: 'flex',
-          flexDirection: 'column',
-          gap: 16,
-          borderRadius: 16,
-          backgroundColor: theme.palette.background.paper,
-          minHeight: 480,
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <Box
           sx={{
-            pb: 16,
-            borderBottomColor: theme.palette.border.main,
-            borderBottomStyle: 'solid',
-            borderBottomWidth: 1,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            typography: 'body1',
+            fontWeight: 600,
+            color: theme.palette.text.primary,
           }}
         >
-          <Box
-            sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-            }}
-          >
-            {t`My Positions`}&nbsp;({currentPairPositions?.length ?? 0})
-          </Box>
-
-          {onClose ? (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 24,
-                height: 24,
-                borderRadius: '50%',
-                borderWidth: 1,
-                color: 'text.secondary',
-                cursor: 'pointer',
-              }}
-            >
-              <Box
-                component={Error}
-                sx={{
-                  width: 16,
-                  height: 16,
-                }}
-                onClick={() => {
-                  onClose();
-                }}
-              />
-            </Box>
-          ) : undefined}
+          {t`My Positions`}&nbsp;({currentPairPositions?.length ?? 0})
         </Box>
 
-        {currentPairPositions && currentPairPositions.length > 0 ? (
-          <>
-            {currentPairPositions?.map((p) => {
-              return (
-                <PositionViewCard
-                  key={p.tokenId}
-                  p={p}
-                  currency0={currencyA}
-                  currency1={currencyB}
-                  onClickManage={() => {
-                    setManageItem(p);
-                  }}
-                />
-              );
-            })}
-            <Button
-              size={Button.Size.big}
-              variant={Button.Variant.second}
-              onClick={() => {
-                handleGoToAddLiquidityV3({
-                  from: baseToken.address,
-                  to: quoteToken.address,
-                  fee: String(feeAmount),
-                });
-              }}
-              sx={{
-                gap: 8,
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-                  fill="#1A1A1B"
-                />
-              </svg>
-              {t`Add Position`}
-            </Button>
-          </>
-        ) : (
-          <>
+        {onClose ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 24,
+              height: 24,
+              borderRadius: '50%',
+              borderWidth: 1,
+              color: 'text.secondary',
+              cursor: 'pointer',
+            }}
+          >
             <Box
+              component={Error}
               sx={{
-                mt: 100,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 12,
+                width: 16,
+                height: 16,
               }}
-            >
-              <EmptyDataIcon
-                sx={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: (24 / 105) * 60,
+              onClick={() => {
+                onClose();
+              }}
+            />
+          </Box>
+        ) : undefined}
+      </Box>
+
+      {currentPairPositions && currentPairPositions.length > 0 ? (
+        currentPairPositions?.map((p) => {
+          if (viewType === 'claim') {
+            return (
+              <PositionClaimCard
+                key={p.tokenId}
+                chainId={chainId}
+                p={p}
+                currencyA={currencyA}
+                currencyB={currencyB}
+                onClose={() => {
+                  //
                 }}
               />
-              <Box
-                sx={{
-                  typography: 'body1',
-                  color: theme.palette.text.secondary,
-                }}
-              >{t`Your position is  empty`}</Box>
-            </Box>
+            );
+          }
+          return (
+            <PositionViewCard
+              key={p.tokenId}
+              p={p}
+              currencyA={currencyA}
+              currencyB={currencyB}
+              onClickManage={(type) => {
+                setManageItem({
+                  item: p,
+                  type,
+                });
+              }}
+            />
+          );
+        })
+      ) : (
+        <>
+          <Box
+            sx={{
+              mt: 100,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
+            <EmptyDataIcon
+              sx={{
+                width: 60,
+                height: 60,
+                borderRadius: (24 / 105) * 60,
+              }}
+            />
             <Box
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                typography: 'body1',
+                color: theme.palette.text.secondary,
               }}
-            >
-              {currentPairPositions !== undefined &&
-              currentPairPositions.length === 0 ? (
-                <Button
-                  size={Button.Size.small}
-                  onClick={() => {
-                    handleGoToAddLiquidityV3({
-                      from: baseToken.address,
-                      to: quoteToken.address,
-                      fee: String(feeAmount),
-                    });
-                  }}
-                >{t`Add Position`}</Button>
-              ) : (
-                <NeedConnectButton size={Button.Size.small} />
-              )}
-            </Box>
-          </>
-        )}
-      </Box>
-    );
-  }, [
-    theme.palette.background.paper,
-    theme.palette.border.main,
-    theme.palette.text.primary,
-    theme.palette.text.secondary,
-    currentPairPositions,
-    onClose,
-    currencyA,
-    currencyB,
-    handleGoToAddLiquidityV3,
-    baseToken.address,
-    quoteToken.address,
-    feeAmount,
-  ]);
-
-  if (manageItem !== null) {
-    return (
-      <AMMV3PositionManage
-        baseToken={baseToken}
-        quoteToken={quoteToken}
-        feeAmount={feeAmount}
-        tokenId={manageItem.tokenId}
-        chainId={chainId}
-        onClose={() => {
-          setManageItem(null);
-        }}
-      />
-    );
-  }
-
-  if (isMobile) {
-    return (
-      <Dialog
-        open={baseToken != null && quoteToken != null}
-        onClose={onClose}
-        scope={!isMobile}
-        modal={undefined}
-        id="pool-operate"
-      >
-        {content}
-      </Dialog>
-    );
-  }
-
-  return content;
+            >{t`Your position is empty`}</Box>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {currentPairPositions !== undefined &&
+            currentPairPositions.length === 0 ? (
+              <Button
+                size={Button.Size.small}
+                onClick={() => {
+                  handleGoToAddLiquidityV3({
+                    from: token0Address,
+                    to: token1Address,
+                    fee: String(feeAmount),
+                  });
+                }}
+              >{t`Add Position`}</Button>
+            ) : (
+              <NeedConnectButton size={Button.Size.small} />
+            )}
+          </Box>
+        </>
+      )}
+    </Box>
+  );
 };

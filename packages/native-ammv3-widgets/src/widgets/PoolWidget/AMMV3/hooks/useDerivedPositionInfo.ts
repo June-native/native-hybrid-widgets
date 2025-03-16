@@ -1,31 +1,21 @@
-import { useMemo } from 'react';
-import { TokenInfo } from '../../../../hooks/Token';
-import { usePool } from './usePools';
+import { Token } from '../sdks/sdk-core';
+import { NativeCurrency } from '../sdks/sdk-core/entities/nativeCurrency';
 import { Pool, Position as V3Position } from '../sdks/v3-sdk';
 import { PositionDetails } from '../types/position';
-import { buildCurrency } from '../utils';
+import { usePool } from './usePools';
 
 export function useDerivedPositionInfo(
   positionDetails: PositionDetails | undefined,
-  baseToken: TokenInfo,
-  quoteToken: TokenInfo,
+  currencyA: Token | NativeCurrency | undefined,
+  currencyB: Token | NativeCurrency | undefined,
 ): {
   position?: V3Position;
   pool?: Pool;
 } {
-  const currency0 = useMemo(
-    () => (baseToken ? buildCurrency(baseToken) : undefined),
-    [baseToken],
-  );
-  const currency1 = useMemo(
-    () => (quoteToken ? buildCurrency(quoteToken) : undefined),
-    [quoteToken],
-  );
-
   // construct pool data
   const [, pool] = usePool(
-    currency0 ?? undefined,
-    currency1 ?? undefined,
+    currencyA ?? undefined,
+    currencyB ?? undefined,
     positionDetails?.fee,
   );
 

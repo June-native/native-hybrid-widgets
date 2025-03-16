@@ -8,7 +8,7 @@ import WidgetContainer from '../../../components/WidgetContainer';
 import { useWidgetDevice } from '../../../hooks/style/useWidgetDevice';
 import { useRouterStore } from '../../../router';
 import { Page, PageType } from '../../../router/types';
-import { AMMV3PositionManage } from '../AMMV3/AMMV3PositionManage';
+import { AMMV3PositionAdd } from '../AMMV3/AMMV3PositionAdd';
 import { AMMV3PositionsView } from '../AMMV3/AMMV3PositionsView';
 import { FeeAmount } from '../AMMV3/sdks/v3-sdk';
 import PoolOperateDialog, {
@@ -185,7 +185,7 @@ export default function PoolList({
         {operatePool?.pool?.type === 'AMMV3' && operatePool.pool.chainId ? (
           poolTab === PoolTab.myLiquidity &&
           operatePool.pool.liquidityPositions?.[0]?.tokenId ? (
-            <AMMV3PositionManage
+            <AMMV3PositionAdd
               baseToken={operatePool.pool.baseToken}
               quoteToken={operatePool.pool.quoteToken}
               feeAmount={Number(operatePool.pool.lpFeeRate) as FeeAmount}

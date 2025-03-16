@@ -1,16 +1,12 @@
+import { useUserOptions } from '../../components/UserOptionsProvider';
 import { useRouterStore } from '../../router';
 import { Page, PageType } from '../../router/types';
-import PoolList from './PoolList';
-import PoolCreate from './PoolCreate';
-import PoolModify from './PoolModify';
-import PoolDetail from './PoolDetail';
-import { useUserOptions } from '../../components/UserOptionsProvider';
 import AMMV2Create from './AMMV2Create';
 import AMMV3Create from './AMMV3/AddLiquidityV3';
-
-export { default as AMMV3Create } from './AMMV3/AddLiquidityV3';
-export { AMMV3PositionsView } from './AMMV3/AMMV3PositionsView';
-export { AMMV3PositionManage } from './AMMV3/AMMV3PositionManage';
+import PoolCreate from './PoolCreate';
+import PoolDetail from './PoolDetail';
+import PoolList from './PoolList';
+import PoolModify from './PoolModify';
 
 export function Pool() {
   const { routerPage } = useUserOptions();

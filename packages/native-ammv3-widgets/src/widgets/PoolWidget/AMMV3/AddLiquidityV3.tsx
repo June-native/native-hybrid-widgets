@@ -284,9 +284,7 @@ export default function AddLiquidityV3({
     <Box
       sx={{
         mx: 'auto',
-        borderRadius: isMobile ? 0 : 16,
-        backgroundColor: 'background.paper',
-        width: isMobile ? '100%' : 600,
+        width: isMobile ? '100%' : 528,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
