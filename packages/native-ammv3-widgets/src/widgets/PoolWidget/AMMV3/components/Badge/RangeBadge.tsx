@@ -17,12 +17,13 @@ export default function RangeBadge({
   const theme = useTheme();
 
   const sx: BoxProps['sx'] = {
-    py: 4,
-    px: 8,
-    color: theme.palette.success.main,
+    py: 2,
+    px: 2,
+    color: '#48D1A5',
     borderRadius: 4,
-    backgroundColor: alpha(theme.palette.success.main, 0.1),
+    backgroundColor: '#2FBA901A',
     typography: 'h6',
+    lineHeight: '15px',
   };
 
   return removed ? (

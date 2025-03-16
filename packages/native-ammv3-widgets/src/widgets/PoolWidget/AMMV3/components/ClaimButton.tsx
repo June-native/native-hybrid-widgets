@@ -1,6 +1,5 @@
 import { ChainId } from '@native-ammv3/api';
 import { Button } from '@native-ammv3/components';
-import { t } from '@lingui/macro';
 import NeedConnectButton from '../../../../components/ConnectWallet/NeedConnectButton';
 
 export interface ClaimButtonProps {
@@ -20,12 +19,24 @@ export const ClaimButton = ({
     <NeedConnectButton includeButton fullWidth chainId={chainId}>
       <Button
         fullWidth
-        size={Button.Size.big}
+        variant={Button.Variant.contained}
+        size={Button.Size.small}
         onClick={onConfirm}
         disabled={disabled}
         isLoading={isLoading}
+        sx={{
+          backgroundColor: '#1C241C',
+          '&:not([disabled]):hover, &:focus-visible': {
+            background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), "#1C241C",`,
+          },
+          color: '#FFF',
+          '&[disabled]': {
+            backgroundColor: '#1C241C',
+            color: '#FFF',
+          },
+        }}
       >
-        {t`Collect fees`}
+        Claim
       </Button>
     </NeedConnectButton>
   );

@@ -1,16 +1,11 @@
 import { t } from '@lingui/macro';
-import {
-  alpha,
-  Box,
-  Button,
-  ButtonBase,
-  useTheme,
-} from '@native-ammv3/components';
+import { alpha, Box, Button, useTheme } from '@native-ammv3/components';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
+import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
@@ -22,6 +17,7 @@ import { useTokenStatus } from '../../../hooks/Token/useTokenStatus';
 import SlippageSetting, {
   useSlipper,
 } from '../PoolOperate/components/SlippageSetting';
+import RangeBadge from './components/Badge/RangeBadge';
 import { Buttons } from './components/Buttons';
 import { CurrencyInputPanel } from './components/CurrencyInputPanel';
 import { FeeSelector } from './components/FeeSelector';
@@ -29,7 +25,6 @@ import LiquidityChartRangeInput from './components/LiquidityChartRangeInput';
 import { RangeSelector } from './components/RangeSelector';
 import { RateToggle } from './components/RateToggle';
 import { ReviewModal } from './components/ReviewModal';
-import { TokenPairSelect } from './components/TokenPairSelect';
 import { DynamicSection, YellowCard } from './components/widgets';
 import { useRangeHopCallbacks } from './hooks/useRangeHopCallbacks';
 import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
@@ -287,6 +282,7 @@ export default function AddLiquidityV3({
         width: isMobile ? '100%' : 528,
         display: 'flex',
         flexDirection: 'column',
+        gap: 28,
         alignItems: 'stretch',
       }}
     >
@@ -295,43 +291,74 @@ export default function AddLiquidityV3({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          px: 20,
-          py: 24,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          backgroundColor: theme.palette.background.paper,
         }}
       >
         <Box
           sx={{
-            textAlign: 'left',
-            typography: 'body1',
-            color: theme.palette.text.primary,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
           }}
-        >{t`Add liquidity`}</Box>
+        >
+          <TokenLogoPair
+            tokens={[
+              { address: state.baseToken?.address },
+              { address: state.quoteToken?.address },
+            ]}
+            mr={0}
+            gap={-8}
+          />
+          <Box
+            sx={{
+              typography: 'h5',
+              fontWeight: 600,
+            }}
+          >
+            {state.baseToken?.symbol}/{state.quoteToken?.symbol}
+          </Box>
+          <RangeBadge removed={false} inRange={true} />
+        </Box>
 
         <Box
-          component={ButtonBase}
           sx={{
-            width: 24,
-            height: 24,
-          }}
-          onClick={() => {
-            handleGoBack();
+            py: 6,
+            px: 8,
+            borderRadius: 8,
+            background: 'linear-gradient(90deg, #42D392 0%, #647EFF 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
           }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+            width="20"
+            height="21"
+            viewBox="0 0 20 21"
             fill="none"
           >
             <path
-              d="M19.3344 6.54518L13.8795 12L19.3344 17.4548L17.5161 19.2731L12.0613 13.8183L6.60643 19.2731L4.78816 17.4548L10.243 12L4.78816 6.54518L6.60643 4.7269L12.0613 10.1817L17.5161 4.7269L19.3344 6.54518Z"
-              fill="#1C241C"
+              d="M1.99998 13.5852V15.8722H4.28701C4.28701 14.6107 3.26154 13.5852 1.99998 13.5852Z"
+              fill="white"
+            />
+            <path
+              d="M13.173 11.5186C12.8327 10.6771 12.3996 9.88196 11.8868 9.14762C13.6452 7.38491 16.0742 6.29282 18.7552 6.29282V4C15.5093 4 12.5604 5.29632 10.3979 7.3965C8.23688 5.29632 5.28793 4 2.04206 4V6.29427C4.72161 6.29427 7.15202 7.38636 8.91038 9.14906C8.39765 9.8834 7.96458 10.6786 7.6242 11.5201C6.33078 9.82547 4.29143 8.73048 2.00006 8.73048V11.0247C4.51883 11.0247 6.58859 12.983 6.7682 15.4569C6.75951 15.6365 6.75516 15.8175 6.75516 16H9.04943C9.04943 15.9348 9.04943 15.8711 9.05232 15.8074H9.07695C9.07695 15.6814 9.07405 15.5568 9.06681 15.4337C9.15806 13.8477 9.63313 12.3631 10.3993 11.0696C11.1655 12.3631 11.6392 13.8477 11.7319 15.4337C11.7261 15.5582 11.7217 15.6828 11.7217 15.8074H11.7464C11.7464 15.8711 11.7492 15.9363 11.7492 16H14.0435C14.0435 15.8175 14.0392 15.6379 14.0305 15.4569C14.2101 12.983 16.2798 11.0247 18.7986 11.0247V8.73048C16.5072 8.73048 14.4679 9.82547 13.1745 11.5186H13.173Z"
+              fill="white"
+            />
+            <path
+              d="M16.5101 15.8722H18.7971V13.5852C17.5356 13.5852 16.5101 14.6107 16.5101 15.8722Z"
+              fill="white"
             />
           </svg>
+          <Box
+            sx={{
+              typography: 'body1',
+              fontWeight: 600,
+              color: '#FFFFFF',
+            }}
+          >
+            Native AMM
+          </Box>
         </Box>
       </Box>
 
@@ -340,39 +367,15 @@ export default function AddLiquidityV3({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
-          gap: 20,
-          p: 20,
+          gap: 28,
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            gap: 12,
-          }}
-        >
-          <Box
-            sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-              textAlign: 'left',
-            }}
-          >
-            {t`Select pair`}
-          </Box>
-          <TokenPairSelect
-            baseToken={state.baseToken}
-            quoteToken={state.quoteToken}
-            dispatch={dispatch}
-          />
-          <FeeSelector
-            disabled={!state.baseToken || !state.quoteToken}
-            feeAmount={state.feeAmount}
-            dispatch={dispatch}
-          />
-        </Box>
+        <FeeSelector
+          disabled={!state.baseToken || !state.quoteToken}
+          feeAmount={state.feeAmount}
+          dispatch={dispatch}
+        />
+
         <DynamicSection disabled={!state.feeAmount || invalidPool}>
           <Box
             sx={{
@@ -616,7 +619,7 @@ export default function AddLiquidityV3({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          px: 20,
+          px: 0,
           py: 16,
           borderBottomLeftRadius: 16,
           borderBottomRightRadius: 16,

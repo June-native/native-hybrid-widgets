@@ -158,7 +158,8 @@ export const AMMV3PositionsView = ({
             color: theme.palette.text.primary,
           }}
         >
-          {t`My Positions`}&nbsp;({currentPairPositions?.length ?? 0})
+          {currencyA?.symbol}-{currencyB?.symbol}&nbsp;Positions&nbsp;(
+          {currentPairPositions?.length ?? 0})
         </Box>
 
         {onClose ? (

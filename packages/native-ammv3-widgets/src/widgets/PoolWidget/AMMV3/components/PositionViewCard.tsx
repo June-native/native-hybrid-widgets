@@ -5,11 +5,13 @@ import { formatTokenAmountNumber } from '../../../../utils';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
 import { usePool } from '../hooks/usePools';
 import { Currency, Price, Token } from '../sdks/sdk-core';
-import { Position as V3Position } from '../sdks/v3-sdk';
+import { FeeAmount, Position as V3Position } from '../sdks/v3-sdk';
 import { Bound } from '../types';
 import { PositionDetails } from '../types/position';
 import { formatTickPrice } from '../utils/formatTickPrice';
 import { InRangeDot } from './InRangeDot';
+import RangeBadge from './Badge/RangeBadge';
+import { FEE_AMOUNT_DETAIL } from './shared';
 
 export interface PriceOrdering {
   priceLower?: Price<Currency, Currency>;
@@ -131,21 +133,21 @@ export const PositionViewCard = ({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
         gap: 24,
         px: 20,
         py: 20,
         pb: 12,
         borderRadius: 12,
-        backgroundColor: theme.palette.background.paperContrast,
+        backgroundColor: 'rgba(28, 36, 28, 0.04)',
       }}
     >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 4,
+          alignItems: 'stretch',
+          gap: 10,
         }}
       >
         <Box
@@ -222,12 +224,26 @@ export const PositionViewCard = ({
           </Box> */}
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <InRangeDot outOfRange={outOfRange} />
-
+          <RangeBadge inRange={!outOfRange} />
           <Box
             sx={{
               typography: 'h6',
-              color: theme.palette.text.secondary,
+              lineHeight: '15px',
+              color: '#647EFF',
+              borderRadius: 4,
+              backgroundColor: '#647EFF1A',
+              px: 2,
+              py: 2,
+            }}
+          >
+            {p.fee ? FEE_AMOUNT_DETAIL[p.fee].label : '-'}
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <Box
+            sx={{
+              typography: 'body2',
+              color: '#939393',
             }}
           >
             {t`Current price`}:&nbsp;
@@ -239,12 +255,31 @@ export const PositionViewCard = ({
           </Box>
         </Box>
       </Box>
-      <Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+        }}
+      >
         <Button
-          variant={Button.Variant.outlined}
+          variant={Button.Variant.contained}
           size={Button.Size.small}
           fullWidth
           onClick={() => onClickManage('add')}
+          backgroundColor="#1C241C"
+          sx={{
+            backgroundColor: '#1C241C',
+            '&:not([disabled]):hover, &:focus-visible': {
+              background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), "#1C241C",`,
+            },
+            color: '#FFF',
+            '&[disabled]': {
+              backgroundColor: '#1C241C',
+              color: '#FFF',
+            },
+          }}
         >
           Add Liquidity
         </Button>
