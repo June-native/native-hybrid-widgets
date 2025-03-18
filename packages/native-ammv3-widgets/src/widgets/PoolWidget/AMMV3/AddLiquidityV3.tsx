@@ -621,9 +621,6 @@ export default function AddLiquidityV3({
           alignItems: 'center',
           px: 0,
           py: 16,
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
-          backgroundColor: theme.palette.background.paper,
         }}
       >
         <Buttons

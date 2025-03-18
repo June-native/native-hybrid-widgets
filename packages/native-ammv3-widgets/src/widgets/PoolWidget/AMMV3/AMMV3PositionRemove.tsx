@@ -1,7 +1,6 @@
 import { t } from '@lingui/macro';
 import { CONTRACT_QUERY_KEY } from '@native-ammv3/api';
-import { Box, useTheme } from '@native-ammv3/components';
-import { Error } from '@native-ammv3/icons';
+import { Box, ButtonBase, useTheme } from '@native-ammv3/components';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useReducer, useState } from 'react';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
@@ -193,22 +192,13 @@ export const AMMV3PositionRemove = ({
   });
 
   return (
-    <Box
-      sx={{
-        borderRadius: 16,
-        backgroundColor: theme.palette.background.paper,
-      }}
-    >
+    <Box>
       <Box
         sx={{
+          pb: 16,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          px: 20,
-          py: 24,
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          backgroundColor: theme.palette.background.paper,
         }}
       >
         <Box
@@ -222,7 +212,7 @@ export const AMMV3PositionRemove = ({
         </Box>
 
         {onClose ? (
-          <Box
+          <ButtonBase
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -234,23 +224,29 @@ export const AMMV3PositionRemove = ({
               color: 'text.secondary',
               cursor: 'pointer',
             }}
+            onClick={(evt) => {
+              evt.stopPropagation();
+              onClose();
+            }}
           >
-            <Box
-              component={Error}
-              sx={{
-                width: 16,
-                height: 16,
-              }}
-              onClick={() => {
-                onClose();
-              }}
-            />
-          </Box>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.3345 6.54518L13.8797 12L19.3345 17.4548L17.5162 19.2731L12.0614 13.8183L6.60659 19.2731L4.78832 17.4548L10.2431 12L4.78832 6.54518L6.60659 4.7269L12.0614 10.1817L17.5162 4.7269L19.3345 6.54518Z"
+                fill="#1C241C"
+              />
+            </svg>
+          </ButtonBase>
         ) : undefined}
       </Box>
 
       {hasExistingPosition && existingPosition && (
-        <Box sx={{ mx: 20, mb: 16 }}>
+        <Box sx={{ mb: 16 }}>
           <PositionAmountPreview
             position={existingPosition}
             inRange={!outOfRange}
@@ -261,7 +257,6 @@ export const AMMV3PositionRemove = ({
       <Box
         sx={{
           mt: 16,
-          mx: 20,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'stretch',
@@ -283,7 +278,6 @@ export const AMMV3PositionRemove = ({
       <Box
         sx={{
           mt: 16,
-          mx: 20,
           display: 'flex',
           alignItems: 'flex-start',
           justifyContent: 'space-between',
@@ -356,11 +350,7 @@ export const AMMV3PositionRemove = ({
           mt: 20,
           display: 'flex',
           alignItems: 'center',
-          px: 20,
           py: 16,
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
-          backgroundColor: theme.palette.background.paper,
         }}
       >
         <RemoveButton

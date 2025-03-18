@@ -177,7 +177,7 @@ msgstr ""
 msgid "he slippage coefficient needs to be greater than or equal to 0, and less than or equal to 1."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:309
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:305
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:65
 msgid "Selected Range"
 msgstr ""
@@ -186,8 +186,8 @@ msgstr ""
 msgid "Do not remind again"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:168
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:221
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:167
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:211
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:261
 msgid "Remove Liquidity"
 msgstr ""
@@ -469,7 +469,7 @@ msgstr ""
 msgid "Add liquidity to obtain LP tokens for mining"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:333
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:328
 msgid "Add more liquidity"
 msgstr ""
 
@@ -585,7 +585,7 @@ msgid "Add Initial Liquidity"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:207
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:265
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:255
 #: src/widgets/PoolWidget/AMMV3/components/ReviewModal.tsx:40
 #: src/widgets/PoolWidget/hooks/useAMMV2AddLiquidity.ts:174
 msgid "Add liquidity"
@@ -679,7 +679,7 @@ msgstr "跨链费用不足，至少需要 {0} {1} "
 msgid "TVL"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:267
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:275
 msgid "Add Position"
 msgstr ""
 
@@ -786,7 +786,7 @@ msgstr "连接中..."
 msgid "Additional Fee"
 msgstr "额外手续费"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:247
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:255
 msgid "Your position is empty"
 msgstr ""
 
@@ -1003,7 +1003,7 @@ msgstr ""
 msgid "Fee rate"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:211
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionAdd.tsx:210
 #: src/widgets/PoolWidget/PoolList/hooks/usePoolListTabs.ts:25
 #: src/widgets/PoolWidget/PoolOperate/AddPoolOperate.tsx:136
 msgid "Add Liquidity"

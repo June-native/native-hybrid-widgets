@@ -1,4 +1,4 @@
-import { Box, useTheme, alpha, BoxProps } from '@native-ammv3/components';
+import { alpha, Box, BoxProps, useTheme } from '@native-ammv3/components';
 
 const gapValues = {
   xs: '4px',
@@ -46,13 +46,11 @@ export const LightCard = ({
   sx?: BoxProps['sx'];
   children?: React.ReactNode;
 }) => {
-  const theme = useTheme();
-
   return (
     <Card
       sx={{
         ...sx,
-        backgroundColor: theme.palette.background.paperContrast,
+        backgroundColor: 'rgba(28, 36, 28, 0.04)',
       }}
     >
       {children}

@@ -1,6 +1,11 @@
 import { t } from '@lingui/macro';
-import { Box, Button, EmptyDataIcon, useTheme } from '@native-ammv3/components';
-import { Error } from '@native-ammv3/icons';
+import {
+  Box,
+  Button,
+  ButtonBase,
+  EmptyDataIcon,
+  useTheme,
+} from '@native-ammv3/components';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
 import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
@@ -131,12 +136,9 @@ export const AMMV3PositionsView = ({
   return (
     <Box
       sx={{
-        p: 20,
         display: 'flex',
         flexDirection: 'column',
         gap: 16,
-        borderRadius: 16,
-        backgroundColor: theme.palette.background.paper,
         minHeight: 480,
       }}
     >
@@ -163,7 +165,7 @@ export const AMMV3PositionsView = ({
         </Box>
 
         {onClose ? (
-          <Box
+          <ButtonBase
             sx={{
               display: 'flex',
               justifyContent: 'center',
@@ -175,18 +177,24 @@ export const AMMV3PositionsView = ({
               color: 'text.secondary',
               cursor: 'pointer',
             }}
+            onClick={(evt) => {
+              evt.stopPropagation();
+              onClose();
+            }}
           >
-            <Box
-              component={Error}
-              sx={{
-                width: 16,
-                height: 16,
-              }}
-              onClick={() => {
-                onClose();
-              }}
-            />
-          </Box>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.3345 6.54518L13.8797 12L19.3345 17.4548L17.5162 19.2731L12.0614 13.8183L6.60659 19.2731L4.78832 17.4548L10.2431 12L4.78832 6.54518L6.60659 4.7269L12.0614 10.1817L17.5162 4.7269L19.3345 6.54518Z"
+                fill="#1C241C"
+              />
+            </svg>
+          </ButtonBase>
         ) : undefined}
       </Box>
 
