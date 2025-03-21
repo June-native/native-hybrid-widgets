@@ -1,45 +1,39 @@
-import { SwapWidgetApi } from '@dodoex/api';
-import { AMMV3PositionsView, SwapWidgetProps, Widget } from '@dodoex/widgets';
-import React from 'react';
+import { AMMV3PositionsView, Widget } from '@native-ammv3/widgets';
 
 export default {
   title: 'Widgets/AMMV3PositionsView',
   component: 'div',
 };
 
+/**
+ * 
+    {
+        "tokenId": "4",
+        "fee": 500,
+        "feeGrowthInside0LastX128": "0",
+        "feeGrowthInside1LastX128": "0",
+        "liquidity": "263217491269085708408",
+        "nonce": "0",
+        "operator": "0x0000000000000000000000000000000000000000",
+        "tickLower": -16100,
+        "tickUpper": -10,
+        "token0": "0x163D876AF3949f45D934870a1783A040Cf717Bc5",
+        "token1": "0x444d30Eeb001Dc8B7B96cEF088381418B82f9441",
+        "tokensOwed0": "0",
+        "tokensOwed1": "0"
+    },
+ */
+
 export const Primary = (props: any) => {
-  const [config, setConfig] = React.useState<SwapWidgetProps>({});
-  const { projectId, apiKey, ...other } = props;
-  React.useEffect(() => {
-    if (projectId && apiKey) {
-      const dodoService = new SwapWidgetApi();
-      dodoService
-        .getConfigSwapWidgetProps(projectId, apiKey)
-        .then(({ swapWidgetProps }) => {
-          setConfig(swapWidgetProps);
-        });
-    }
-  }, [projectId, apiKey]);
+  const { apiKey, ...other } = props;
 
   return (
-    <Widget {...config} {...other} apikey={apiKey}>
+    <Widget {...other} apikey={apiKey}>
       <AMMV3PositionsView
-        chainId={11155111}
-        baseToken={{
-          address: '0x163D876AF3949f45D934870a1783A040Cf717Bc5',
-          decimals: 18,
-          symbol: 'uni_test2',
-          name: 'uni_test2',
-          chainId: 11155111,
-        }}
-        quoteToken={{
-          address: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
-          decimals: 6,
-          symbol: 'uni_test3',
-          name: 'uni_test3',
-          chainId: 11155111,
-        }}
+        token0Address="0x163D876AF3949f45D934870a1783A040Cf717Bc5"
+        token1Address="0x444d30Eeb001Dc8B7B96cEF088381418B82f9441"
         feeAmount={500}
+        viewType="add-remove"
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
           window.alert('handleGoToAddLiquidityV3')

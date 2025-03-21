@@ -1,4 +1,4 @@
-import { PaletteMode } from '@dodoex/components';
+import { PaletteMode } from '@native-ammv3/components';
 import { AnyAction } from 'redux';
 
 export type ColorMode = PaletteMode | 'system';

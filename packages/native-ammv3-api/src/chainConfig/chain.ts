@@ -1,0 +1,13 @@
+export enum ChainId {
+  MAINNET = 1,
+
+  SEPOLIA = 11155111,
+
+  BSC = 56,
+
+  ARBITRUM_ONE = 42161,
+
+  ARBITRUM_SEPOLIA = 421614,
+
+  OKCHAIN = 66,
+}
