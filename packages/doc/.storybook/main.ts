@@ -45,6 +45,11 @@ const config: StorybookConfig = {
       resolve: {
         ...config.resolve,
         alias: {
+          '@native-ammv3/api': path.resolve(
+            __dirname,
+            '../../native-ammv3-api',
+            'src/',
+          ),
           '@native-ammv3/components': path.resolve(
             __dirname,
             '../../native-ammv3-components',

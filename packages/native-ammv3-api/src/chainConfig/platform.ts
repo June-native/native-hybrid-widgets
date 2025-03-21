@@ -9,4 +9,5 @@ export const platformIdMap: {
   [ChainId.ARBITRUM_ONE]: 'arbitrum',
   [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
   [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.BASE]: 'base',
 };

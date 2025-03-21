@@ -49,4 +49,11 @@ export const basicTokenMap: {
     showDecimals: 6,
     wrappedTokenAddress: '0xfd6fFee92D25158b29315C71b0Bb4dE727530FaF',
   },
+  [ChainId.BASE]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'ETH',
+    name: 'Ethereum',
+    wrappedTokenSymbol: 'WETH',
+    wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
+  },
 };

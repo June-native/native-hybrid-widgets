@@ -1,9 +1,9 @@
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { getCreate2Address } from '@ethersproject/address';
 import { keccak256 } from '@ethersproject/solidity';
-import { ChainId } from '../../sdk-core';
+import { CHAIN_TO_ADDRESSES_MAP, ChainId } from '../../sdk-core';
 import { Token } from '../../sdk-core/entities/token';
-import { FeeAmount, poolInitCodeHash } from '../constants';
+import { FeeAmount } from '../constants';
 
 /**
  * Computes a pool address
@@ -28,7 +28,7 @@ export function computePoolAddress({
   tokenB: Token;
   fee: FeeAmount;
   initCodeHashManualOverride?: string;
-  chainId?: ChainId;
+  chainId: ChainId;
 }): string {
   const [token0, token1] = tokenA.sortsBefore(tokenB)
     ? [tokenA, tokenB]
@@ -42,12 +42,9 @@ export function computePoolAddress({
       ),
     ],
   );
-  const initCodeHash = initCodeHashManualOverride ?? poolInitCodeHash(chainId);
+  const initCodeHash =
+    initCodeHashManualOverride ??
+    CHAIN_TO_ADDRESSES_MAP[chainId].poolInitCodeHash;
 
-  // ZKSync uses a different create2 address computation
-  // Most likely all ZKEVM chains will use the different computation from standard create2
-  switch (chainId) {
-    default:
-      return getCreate2Address(factoryAddress, salt, initCodeHash);
-  }
+  return getCreate2Address(factoryAddress, salt, initCodeHash);
 }

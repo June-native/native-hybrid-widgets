@@ -8,5 +8,6 @@ export const SUPPORTED_CHAINS = [
   ChainId.SEPOLIA,
   ChainId.ARBITRUM_SEPOLIA,
   ChainId.OKCHAIN,
+  ChainId.BASE,
 ] as const;
 export type SupportedChainsType = (typeof SUPPORTED_CHAINS)[number];

@@ -1,6 +1,6 @@
 {
   "name": "@native-ammv3/api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Native AMM V3 API Kit",
   "source": "src/index.ts",
   "types": "dist/types/index.d.ts",
@@ -21,7 +21,7 @@
     "release": "semantic-release",
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
-    "release.npm-publish-beta": "npm publish --tag beta"
+    "release.npm-publish-beta": "yarn run build && npm publish --tag beta"
   },
   "author": "",
   "publishConfig": {

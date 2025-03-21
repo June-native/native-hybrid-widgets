@@ -25,6 +25,7 @@ export const rpcServerMap: {
     'https://okc-mainnet.gateway.pokt.network/v1/lb/6275309bea1b320039c893ff',
   ],
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
+  [ChainId.BASE]: ['https://mainnet.base.org'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -51,6 +52,7 @@ export const scanUrlDomainMap: {
   [ChainId.MAINNET]: 'etherscan.io',
   [ChainId.BSC]: 'bscscan.com',
   [ChainId.OKCHAIN]: 'www.oklink.com/okexchain',
+  [ChainId.BASE]: 'basescan.org',
   [ChainId.ARBITRUM_ONE]: 'arbiscan.io',
   [ChainId.ARBITRUM_SEPOLIA]: 'sepolia.arbiscan.io',
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
@@ -65,4 +67,5 @@ export const ThegraphKeyMap: {
   [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
   [ChainId.OKCHAIN]: 'okchain',
   [ChainId.SEPOLIA]: 'sepolia',
+  [ChainId.BASE]: 'base',
 };

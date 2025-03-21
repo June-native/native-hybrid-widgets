@@ -10,4 +10,6 @@ export enum ChainId {
   ARBITRUM_SEPOLIA = 421614,
 
   OKCHAIN = 66,
+
+  BASE = 8453,
 }
