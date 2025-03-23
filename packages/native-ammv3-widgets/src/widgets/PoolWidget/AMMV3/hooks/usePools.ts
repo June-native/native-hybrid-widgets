@@ -3,12 +3,7 @@ import { useQueries } from '@tanstack/react-query';
 import JSBI from 'jsbi';
 import { useMemo } from 'react';
 import { useWalletInfo } from '../../../../hooks/ConnectWallet/useWalletInfo';
-import {
-  BigintIsh,
-  Currency,
-  Token,
-  V3_CORE_FACTORY_ADDRESSES,
-} from '../sdks/sdk-core';
+import { BigintIsh, Currency, Token } from '../sdks/sdk-core';
 import { FeeAmount, Pool, computePoolAddress } from '../sdks/v3-sdk';
 import { ammV3Api } from '../utils';
 
@@ -23,7 +18,6 @@ export class PoolCache {
   private static addresses: { key: string; address: string }[] = [];
 
   static getPoolAddress(
-    factoryAddress: string,
     tokenA: Token,
     tokenB: Token,
     fee: FeeAmount,
@@ -35,7 +29,7 @@ export class PoolCache {
 
     const { address: addressA } = tokenA;
     const { address: addressB } = tokenB;
-    const key = `${factoryAddress}:${addressA}:${addressB}:${fee.toString()}`;
+    const key = `${addressA}:${addressB}:${fee.toString()}`;
     const found = this.addresses.find((address) => address.key === key);
     if (found) {
       return found.address;
@@ -44,7 +38,6 @@ export class PoolCache {
     const address = {
       key,
       address: computePoolAddress({
-        factoryAddress,
         tokenA,
         tokenB,
         fee,
@@ -124,15 +117,8 @@ export function usePools(
   }, [chainId, poolKeys]);
 
   const poolAddresses: (string | undefined)[] = useMemo(() => {
-    const v3CoreFactoryAddress = chainId && V3_CORE_FACTORY_ADDRESSES[chainId];
-    if (!v3CoreFactoryAddress) {
-      return new Array(poolTokens.length);
-    }
-
     return poolTokens.map(
-      (value) =>
-        value &&
-        PoolCache.getPoolAddress(v3CoreFactoryAddress, ...value, chainId),
+      (value) => value && PoolCache.getPoolAddress(...value, chainId),
     );
   }, [chainId, poolTokens]);
 

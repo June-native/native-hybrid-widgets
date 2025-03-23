@@ -22,9 +22,9 @@ import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3PositionFromTokenId } from './hooks/useV3Positions';
 import { reducer } from './reducer';
 import {
+  CHAIN_TO_ADDRESSES_MAP,
   ChainId,
   CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
   Token,
 } from './sdks/sdk-core';
 import { NativeCurrency } from './sdks/sdk-core/entities/nativeCurrency';
@@ -157,8 +157,13 @@ export const AMMV3PositionRemove = ({
               recipient: account,
             },
           });
+        const { nonfungiblePositionManagerAddress } =
+          CHAIN_TO_ADDRESSES_MAP[chainId];
+        if (!nonfungiblePositionManagerAddress) {
+          return;
+        }
         let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          to: nonfungiblePositionManagerAddress,
           data: calldata,
           value,
         };

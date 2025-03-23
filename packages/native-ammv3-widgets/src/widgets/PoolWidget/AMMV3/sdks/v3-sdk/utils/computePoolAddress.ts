@@ -16,18 +16,14 @@ import { FeeAmount } from '../constants';
  * @returns The pool address
  */
 export function computePoolAddress({
-  factoryAddress,
   tokenA,
   tokenB,
   fee,
-  initCodeHashManualOverride,
   chainId,
 }: {
-  factoryAddress: string;
   tokenA: Token;
   tokenB: Token;
   fee: FeeAmount;
-  initCodeHashManualOverride?: string;
   chainId: ChainId;
 }): string {
   const [token0, token1] = tokenA.sortsBefore(tokenB)
@@ -42,9 +38,12 @@ export function computePoolAddress({
       ),
     ],
   );
-  const initCodeHash =
-    initCodeHashManualOverride ??
-    CHAIN_TO_ADDRESSES_MAP[chainId].poolInitCodeHash;
+  const { poolInitCodeHash, v3CoreFactoryAddress, NativeV3PoolDeployer } =
+    CHAIN_TO_ADDRESSES_MAP[chainId];
 
-  return getCreate2Address(factoryAddress, salt, initCodeHash);
+  return getCreate2Address(
+    NativeV3PoolDeployer ?? v3CoreFactoryAddress,
+    salt,
+    poolInitCodeHash,
+  );
 }

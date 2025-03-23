@@ -31,9 +31,9 @@ import { useV3DerivedMintInfo } from './hooks/useV3DerivedMintInfo';
 import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { reducer, Types } from './reducer';
 import {
+  CHAIN_TO_ADDRESSES_MAP,
   Currency,
   CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
 } from './sdks/sdk-core';
 import { NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
@@ -163,7 +163,8 @@ export default function AddLiquidityV3({
   const approvalA = useTokenStatus(
     convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_A]?.currency),
     {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+      contractAddress:
+        CHAIN_TO_ADDRESSES_MAP[chainId].nonfungiblePositionManagerAddress,
       overrideBalance: currencyBalances[Field.CURRENCY_A]
         ? new BigNumber(currencyBalances[Field.CURRENCY_A].toSignificant())
         : undefined,
@@ -175,7 +176,8 @@ export default function AddLiquidityV3({
   const approvalB = useTokenStatus(
     convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_B]?.currency),
     {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+      contractAddress:
+        CHAIN_TO_ADDRESSES_MAP[chainId].nonfungiblePositionManagerAddress,
       overrideBalance: currencyBalances[Field.CURRENCY_B]
         ? new BigNumber(currencyBalances[Field.CURRENCY_B].toSignificant())
         : undefined,
@@ -245,8 +247,13 @@ export default function AddLiquidityV3({
             useNative,
             createPool: noLiquidity,
           });
+        const { nonfungiblePositionManagerAddress } =
+          CHAIN_TO_ADDRESSES_MAP[chainId];
+        if (!nonfungiblePositionManagerAddress) {
+          return;
+        }
         let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          to: nonfungiblePositionManagerAddress,
           data: calldata,
           value,
         };

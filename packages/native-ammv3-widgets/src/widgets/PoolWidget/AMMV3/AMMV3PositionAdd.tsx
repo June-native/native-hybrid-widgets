@@ -25,10 +25,10 @@ import { useV3MintActionHandlers } from './hooks/useV3MintActionHandlers';
 import { useV3PositionFromTokenId } from './hooks/useV3Positions';
 import { reducer } from './reducer';
 import {
+  CHAIN_TO_ADDRESSES_MAP,
   ChainId,
   Currency,
   CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
   Token,
 } from './sdks/sdk-core';
 import { NativeCurrency } from './sdks/sdk-core/entities/nativeCurrency';
@@ -148,7 +148,8 @@ export const AMMV3PositionAdd = ({
   const approvalA = useTokenStatus(
     convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_A]?.currency),
     {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+      contractAddress:
+        CHAIN_TO_ADDRESSES_MAP[chainId].nonfungiblePositionManagerAddress,
       overrideBalance: currencyBalances[Field.CURRENCY_A]
         ? new BigNumber(currencyBalances[Field.CURRENCY_A].toSignificant())
         : undefined,
@@ -160,7 +161,8 @@ export const AMMV3PositionAdd = ({
   const approvalB = useTokenStatus(
     convertBackToTokenInfo(parsedAmounts[Field.CURRENCY_B]?.currency),
     {
-      contractAddress: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+      contractAddress:
+        CHAIN_TO_ADDRESSES_MAP[chainId].nonfungiblePositionManagerAddress,
       overrideBalance: currencyBalances[Field.CURRENCY_B]
         ? new BigNumber(currencyBalances[Field.CURRENCY_B].toSignificant())
         : undefined,
@@ -200,8 +202,13 @@ export const AMMV3PositionAdd = ({
             deadline: deadline.toString(),
             useNative,
           });
+        const { nonfungiblePositionManagerAddress } =
+          CHAIN_TO_ADDRESSES_MAP[chainId];
+        if (!nonfungiblePositionManagerAddress) {
+          return;
+        }
         let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          to: nonfungiblePositionManagerAddress,
           data: calldata,
           value,
         };

@@ -1,7 +1,13 @@
 import JSBI from 'jsbi';
 import invariant from 'tiny-invariant';
-import { BigintIsh, CurrencyAmount, Price, Token } from '../../sdk-core';
-import { FACTORY_ADDRESS, FeeAmount, TICK_SPACINGS } from '../constants';
+import {
+  BigintIsh,
+  ChainId,
+  CurrencyAmount,
+  Price,
+  Token,
+} from '../../sdk-core';
+import { FeeAmount, TICK_SPACINGS } from '../constants';
 import { NEGATIVE_ONE, Q192 } from '../internalConstants';
 import { computePoolAddress } from '../utils/computePoolAddress';
 import { TickMath } from '../utils/tickMath';
@@ -34,15 +40,13 @@ export class Pool {
     tokenA: Token,
     tokenB: Token,
     fee: FeeAmount,
-    initCodeHashManualOverride?: string,
-    factoryAddressOverride?: string,
+    chainId?: ChainId,
   ): string {
     return computePoolAddress({
-      factoryAddress: factoryAddressOverride ?? FACTORY_ADDRESS,
       fee,
       tokenA,
       tokenB,
-      initCodeHashManualOverride,
+      chainId: chainId ?? ChainId.BASE,
     });
   }
 

@@ -14,10 +14,10 @@ import { formatTokenAmountNumber } from '../../../../utils';
 import { usePool } from '../hooks/usePools';
 import { useV3PositionFees } from '../hooks/useV3PositionFees';
 import {
+  CHAIN_TO_ADDRESSES_MAP,
   ChainId,
   Currency,
   CurrencyAmount,
-  NONFUNGIBLE_POSITION_MANAGER_ADDRESSES,
 } from '../sdks/sdk-core';
 import { NonfungiblePositionManager } from '../sdks/v3-sdk';
 import { PositionDetails } from '../types/position';
@@ -85,8 +85,13 @@ export const PositionClaimCard = ({
               feeValue1 ?? CurrencyAmount.fromRawAmount(pool.token1, 0),
             recipient: account,
           });
+        const { nonfungiblePositionManagerAddress } =
+          CHAIN_TO_ADDRESSES_MAP[chainId];
+        if (!nonfungiblePositionManagerAddress) {
+          return;
+        }
         let txn: { to: string; data: string; value: string } = {
-          to: NONFUNGIBLE_POSITION_MANAGER_ADDRESSES[chainId],
+          to: nonfungiblePositionManagerAddress,
           data: calldata,
           value,
         };

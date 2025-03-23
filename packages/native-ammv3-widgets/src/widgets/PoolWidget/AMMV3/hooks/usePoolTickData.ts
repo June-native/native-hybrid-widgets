@@ -8,7 +8,6 @@ import {
   Currency,
   Price,
   Token,
-  V3_CORE_FACTORY_ADDRESSES,
 } from '../sdks/sdk-core';
 import {
   computePoolAddress,
@@ -65,7 +64,6 @@ function usePaginatedTickQuery(
           tokenB: currencyB?.wrapped,
           fee: feeAmount,
           chainId,
-          factoryAddress: V3_CORE_FACTORY_ADDRESSES[chainId],
         })
       : undefined;
 

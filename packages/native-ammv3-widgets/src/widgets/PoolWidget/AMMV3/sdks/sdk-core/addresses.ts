@@ -1,4 +1,4 @@
-import { ChainId, SUPPORTED_CHAINS, SupportedChainsType } from './chains';
+import { ChainId, SupportedChainsType } from './chains';
 
 type AddressMap = { [chainId: number]: string };
 
@@ -8,6 +8,12 @@ type ChainAddresses = {
    * @see https://taikoscan.io/address/0x78172691DD3B8ADa7aEbd9bFfB487FB11D735DB2?tab=contract#code
    */
   v3CoreFactoryAddress: string;
+  /**
+   * NativeV3PoolDeployer
+   * 部分网络如 base 需要使用 NativeV3PoolDeployer 来部署池子并计算池子地址
+   * @see https://basescan.org/address/0xBA8dB0CAf781cAc69b6acf6C848aC148264Cc05d#code
+   */
+  NativeV3PoolDeployer?: string;
   /**
    * NonfungiblePositionManager
    * @see https://taikoscan.io/address/0x2623281DdcC34A73a9e8898f2c57A32A860903f1?tab=contract#code
@@ -75,6 +81,7 @@ const OKCHAIN_ADDRESSES: ChainAddresses = {
 
 const BASE_ADDRESSES: ChainAddresses = {
   v3CoreFactoryAddress: '0x3c6154B5a9Bf28807520999F40d8647d4942D395',
+  NativeV3PoolDeployer: '0xBA8dB0CAf781cAc69b6acf6C848aC148264Cc05d',
   nonfungiblePositionManagerAddress:
     '0xe3D41d19564922C9952f692C5Dd0563030f5f2EF',
   theGraphUrl:
@@ -94,23 +101,4 @@ export const CHAIN_TO_ADDRESSES_MAP: Record<
   [ChainId.BSC]: BSC_ADDRESSES,
   [ChainId.OKCHAIN]: OKCHAIN_ADDRESSES,
   [ChainId.BASE]: BASE_ADDRESSES,
-};
-
-/* V3 Contract Addresses */
-export const V3_CORE_FACTORY_ADDRESSES: AddressMap = {
-  ...SUPPORTED_CHAINS.reduce<AddressMap>((memo, chainId) => {
-    memo[chainId] = CHAIN_TO_ADDRESSES_MAP[chainId].v3CoreFactoryAddress;
-    return memo;
-  }, {}),
-};
-
-export const NONFUNGIBLE_POSITION_MANAGER_ADDRESSES: AddressMap = {
-  ...SUPPORTED_CHAINS.reduce<AddressMap>((memo, chainId) => {
-    const nonfungiblePositionManagerAddress =
-      CHAIN_TO_ADDRESSES_MAP[chainId].nonfungiblePositionManagerAddress;
-    if (nonfungiblePositionManagerAddress) {
-      memo[chainId] = nonfungiblePositionManagerAddress;
-    }
-    return memo;
-  }, {}),
 };
