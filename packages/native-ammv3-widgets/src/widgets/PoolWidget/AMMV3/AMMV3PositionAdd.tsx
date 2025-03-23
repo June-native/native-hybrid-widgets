@@ -4,7 +4,6 @@ import { Box, ButtonBase, useTheme } from '@native-ammv3/components';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useMemo, useReducer, useState } from 'react';
-import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { useSubmission } from '../../../hooks/Submission';
@@ -297,7 +296,7 @@ export const AMMV3PositionAdd = ({
       </Box>
 
       {hasExistingPosition && existingPosition && (
-        <Box sx={{ mb: 16 }}>
+        <Box sx={{ mb: 28 }}>
           <PositionAmountPreview
             position={existingPosition}
             inRange={!outOfRange}
@@ -305,8 +304,58 @@ export const AMMV3PositionAdd = ({
         </Box>
       )}
 
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'stretch',
+          gap: 16,
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box
+            sx={{
+              typography: 'body1',
+              fontWeight: 600,
+              color: theme.palette.text.primary,
+              textAlign: 'left',
+            }}
+          >
+            {t`Add more liquidity`}
+          </Box>
+          <SlippageSetting
+            value={slipper}
+            onChange={setSlipper}
+            disabled={false}
+            type="AMMV3"
+          />
+        </Box>
+        <CurrencyInputPanel
+          value={formattedAmounts[Field.CURRENCY_A]}
+          onUserInput={onFieldAInput}
+          maxAmount={maxAmounts[Field.CURRENCY_A]}
+          balance={currencyBalances[Field.CURRENCY_A]}
+          currency={currencies[Field.CURRENCY_A] ?? null}
+          locked={depositADisabled}
+        />
+        <CurrencyInputPanel
+          value={formattedAmounts[Field.CURRENCY_B]}
+          onUserInput={onFieldBInput}
+          maxAmount={maxAmounts[Field.CURRENCY_B]}
+          balance={currencyBalances[Field.CURRENCY_B]}
+          currency={currencies[Field.CURRENCY_B] ?? null}
+          locked={depositBDisabled}
+        />
+      </Box>
+
       {hasExistingPosition && existingPosition && (
-        <Box sx={{ mt: 16 }}>
+        <Box sx={{ mt: 28 }}>
           <PositionSelectedRangePreview
             position={existingPosition}
             title={t`Selected Range`}
@@ -317,55 +366,9 @@ export const AMMV3PositionAdd = ({
 
       <Box
         sx={{
-          mt: 16,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'stretch',
-          gap: 12,
-        }}
-      >
-        <Box
-          sx={{
-            typography: 'body1',
-            fontWeight: 600,
-            color: theme.palette.text.secondary,
-            textAlign: 'left',
-          }}
-        >
-          {t`Add more liquidity`}
-        </Box>
-        <Box>
-          <CurrencyInputPanel
-            value={formattedAmounts[Field.CURRENCY_A]}
-            onUserInput={onFieldAInput}
-            maxAmount={maxAmounts[Field.CURRENCY_A]}
-            balance={currencyBalances[Field.CURRENCY_A]}
-            currency={currencies[Field.CURRENCY_A] ?? null}
-            locked={depositADisabled}
-          />
-          <CardPlusConnected />
-          <CurrencyInputPanel
-            value={formattedAmounts[Field.CURRENCY_B]}
-            onUserInput={onFieldBInput}
-            maxAmount={maxAmounts[Field.CURRENCY_B]}
-            balance={currencyBalances[Field.CURRENCY_B]}
-            currency={currencies[Field.CURRENCY_B] ?? null}
-            locked={depositBDisabled}
-          />
-        </Box>
-        <SlippageSetting
-          value={slipper}
-          onChange={setSlipper}
-          disabled={false}
-          type="AMMV3"
-        />
-      </Box>
-
-      <Box
-        sx={{
           display: 'flex',
           alignItems: 'center',
-          py: 16,
+          pt: 28,
         }}
       >
         <Buttons

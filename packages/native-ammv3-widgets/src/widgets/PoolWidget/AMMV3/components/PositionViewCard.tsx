@@ -1,15 +1,16 @@
-import { Box, Button, useTheme } from '@native-ammv3/components';
-import { t } from '@lingui/macro';
-import { useMemo } from 'react';
+import { Box, Button, ButtonBase } from '@native-ammv3/components';
+import { useMemo, useState } from 'react';
+import TokenLogo from '../../../../components/TokenLogo';
 import { formatTokenAmountNumber } from '../../../../utils';
+import { useDerivedPositionInfo } from '../hooks/useDerivedPositionInfo';
 import useIsTickAtLimit from '../hooks/useIsTickAtLimit';
 import { usePool } from '../hooks/usePools';
-import { Currency, Price, Token } from '../sdks/sdk-core';
-import { FeeAmount, Position as V3Position } from '../sdks/v3-sdk';
+import { useV3PositionFromTokenId } from '../hooks/useV3Positions';
+import { ChainId, Currency, Price, Token } from '../sdks/sdk-core';
+import { Position as V3Position } from '../sdks/v3-sdk';
 import { Bound } from '../types';
 import { PositionDetails } from '../types/position';
 import { formatTickPrice } from '../utils/formatTickPrice';
-import { InRangeDot } from './InRangeDot';
 import RangeBadge from './Badge/RangeBadge';
 import { FEE_AMOUNT_DETAIL } from './shared';
 
@@ -73,6 +74,7 @@ export function getPriceOrderingFromPositionForUI(
 
 export interface PositionViewCardProps {
   p: PositionDetails;
+  chainId: ChainId;
   currencyA: Currency | undefined;
   currencyB: Currency | undefined;
   onClickManage: (type: 'add' | 'remove') => void;
@@ -80,11 +82,12 @@ export interface PositionViewCardProps {
 
 export const PositionViewCard = ({
   p,
+  chainId,
   currencyA,
   currencyB,
   onClickManage,
 }: PositionViewCardProps) => {
-  const theme = useTheme();
+  const [reverse, setReverse] = useState(false);
 
   // construct Position from details returned
   const [, pool] = usePool(
@@ -105,6 +108,17 @@ export const PositionViewCard = ({
     return undefined;
   }, [p.liquidity, p.tickLower, p.tickUpper, pool]);
 
+  const { position: existingPositionDetails } = useV3PositionFromTokenId(
+    p.tokenId,
+    chainId,
+  );
+
+  const { position: existingPosition } = useDerivedPositionInfo(
+    existingPositionDetails,
+    currencyA,
+    currencyB,
+  );
+
   const tickAtLimit = useIsTickAtLimit(p.fee, p.tickLower, p.tickUpper);
 
   // prices
@@ -122,11 +136,6 @@ export const PositionViewCard = ({
   const outOfRange: boolean = pool
     ? pool.tickCurrent < p.tickLower || pool.tickCurrent >= p.tickUpper
     : false;
-
-  const sorted = currencyA === currencyA;
-  const price = sorted
-    ? position?.pool.priceOf(position?.pool.token0)
-    : position?.pool.priceOf(position?.pool.token1);
 
   return (
     <Box
@@ -154,75 +163,85 @@ export const PositionViewCard = ({
           sx={{
             display: 'flex',
             alignItems: 'center',
-            gap: 4,
-            typography: 'h5',
-            color: theme.palette.text.primary,
+            justifyContent: 'space-between',
           }}
         >
-          <Box>
-            <>
-              <span>
-                {formatTickPrice({
-                  price: priceLower,
-                  atLimit: tickAtLimit,
-                  direction: Bound.LOWER,
-                })}
-                &nbsp;
-              </span>
-              {currencyQuote?.symbol}
-            </>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <TokenLogo
+              address={existingPosition?.pool.token0?.address ?? ''}
+              chainId={existingPosition?.pool.token0?.chainId}
+              noShowChain
+              width={20}
+              height={20}
+              marginRight={0}
+            />
+            <Box
+              sx={{
+                typography: 'body1',
+                fontWeight: 600,
+                color: '#1C241C',
+              }}
+            >
+              {formatTokenAmountNumber({
+                input: existingPosition?.amount0.toSignificant(),
+                decimals: existingPosition?.pool.token0?.decimals,
+              })}
+              &nbsp;{existingPosition?.pool.token0?.symbol}
+            </Box>
           </Box>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="19"
-            viewBox="0 0 18 19"
+            width="15"
+            height="6"
+            viewBox="0 0 15 6"
             fill="none"
           >
             <path
-              d="M15.75 9.50293L12.75 12.5029L11.7 11.4529L12.8813 10.2529L5.11875 10.2529L6.3 11.4529L5.25 12.5029L2.25 9.50293L5.25 6.50293L6.31875 7.55293L5.11875 8.75293L12.8813 8.75293L11.7 7.55293L12.75 6.50293L15.75 9.50293Z"
-              fill="currentColor"
-              fillOpacity="0.5"
+              d="M14.25 3L11.25 6L10.2 4.95L11.3813 3.75L3.61875 3.75L4.8 4.95L3.75 6L0.75 3L3.75 -1.31134e-07L4.81875 1.05L3.61875 2.25L11.3813 2.25L10.2 1.05L11.25 -4.5897e-07L14.25 3Z"
+              fill="#939393"
+              fill-opacity="0.5"
             />
           </svg>
-          <Box>
-            <>
-              <span>
-                {formatTickPrice({
-                  price: priceUpper,
-                  atLimit: tickAtLimit,
-                  direction: Bound.UPPER,
-                })}
-                &nbsp;
-              </span>
-              {currencyQuote?.symbol}
-            </>
-          </Box>
-          {/* <Box
-            component="svg"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 18 19"
-            fill="none"
+          <Box
             sx={{
-              ml: 4,
-              width: 18,
-              height: 19,
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              gap: 4,
             }}
           >
-            <circle
-              cx="9"
-              cy="9.5"
-              r="9"
-              fill="currentColor"
-              fillOpacity="0.1"
+            <TokenLogo
+              address={existingPosition?.pool.token1?.address ?? ''}
+              chainId={existingPosition?.pool.token1?.chainId}
+              noShowChain
+              width={20}
+              height={20}
+              marginRight={0}
             />
-            <path
-              d="M9.5 7H4.5V8.5H13.5L9.5 4.75V7ZM8.25 14.25V12H13.5V10.5H4.5L8.25 14.25Z"
-              fill="currentColor"
-              fillOpacity="0.5"
-            />
-          </Box> */}
+            <Box
+              sx={{
+                typography: 'body1',
+                fontWeight: 600,
+                color: '#1C241C',
+              }}
+            >
+              {formatTokenAmountNumber({
+                input: existingPosition?.amount1.toSignificant(),
+                decimals: existingPosition?.pool.token1?.decimals,
+              })}
+              &nbsp;{existingPosition?.pool.token1?.symbol}
+            </Box>
+          </Box>
         </Box>
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <RangeBadge inRange={!outOfRange} />
           <Box
@@ -239,20 +258,48 @@ export const PositionViewCard = ({
             {p.fee ? FEE_AMOUNT_DETAIL[p.fee].label : '-'}
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <Box
-            sx={{
-              typography: 'body2',
-              color: '#939393',
-            }}
-          >
-            {t`Current price`}:&nbsp;
-            {`${formatTokenAmountNumber({
-              input: price?.toSignificant(),
-            })}`}
-            &nbsp;{currencyQuote?.symbol}&nbsp;per&nbsp;
-            {currencyBase?.symbol}
+
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box sx={{ typography: 'body2', color: '#939393', fontWeight: 500 }}>
+            Min&nbsp;
+            {formatTickPrice({
+              price: reverse ? priceUpper?.invert() : priceLower,
+              atLimit: tickAtLimit,
+              direction: Bound.LOWER,
+            })}
+            &nbsp;/&nbsp;Max&nbsp;
+            {formatTickPrice({
+              price: reverse ? priceLower?.invert() : priceUpper,
+              atLimit: tickAtLimit,
+              direction: Bound.UPPER,
+            })}
+            &nbsp;of&nbsp;
+            {reverse ? currencyBase?.symbol : currencyQuote?.symbol}
+            &nbsp;per&nbsp;
+            {reverse ? currencyQuote?.symbol : currencyBase?.symbol}
           </Box>
+          <ButtonBase onClick={() => setReverse(!reverse)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+            >
+              <circle cx="9" cy="9" r="9" fill="#1C241C" fill-opacity="0.1" />
+              <path
+                d="M9.5 6.5H4.5V8H13.5L9.5 4.25V6.5ZM8.25 13.75V11.5H13.5V10H4.5L8.25 13.75Z"
+                fill="#1C241C"
+                fill-opacity="0.5"
+              />
+            </svg>
+          </ButtonBase>
         </Box>
       </Box>
 

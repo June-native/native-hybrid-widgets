@@ -1,14 +1,13 @@
 import { t } from '@lingui/macro';
 import {
   Box,
-  Button,
   ButtonBase,
   EmptyDataIcon,
   useTheme,
 } from '@native-ammv3/components';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo, useState } from 'react';
-import NeedConnectButton from '../../../components/ConnectWallet/NeedConnectButton';
+import { LoadingRotation } from '../../../components/LoadingRotation';
 import { tokenApi } from '../../../constants/api';
 import { useWalletInfo } from '../../../hooks/ConnectWallet/useWalletInfo';
 import { AMMV3PositionAdd } from './AMMV3PositionAdd';
@@ -198,7 +197,19 @@ export const AMMV3PositionsView = ({
         ) : undefined}
       </Box>
 
-      {currentPairPositions && currentPairPositions.length > 0 ? (
+      {loading ? (
+        <Box
+          sx={{
+            mt: 100,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 12,
+          }}
+        >
+          <LoadingRotation />
+        </Box>
+      ) : currentPairPositions && currentPairPositions.length > 0 ? (
         currentPairPositions?.map((p) => {
           if (viewType === 'claim') {
             return (
@@ -217,6 +228,7 @@ export const AMMV3PositionsView = ({
           return (
             <PositionViewCard
               key={p.tokenId}
+              chainId={chainId}
               p={p}
               currencyA={currencyA}
               currencyB={currencyB}
@@ -230,54 +242,29 @@ export const AMMV3PositionsView = ({
           );
         })
       ) : (
-        <>
+        <Box
+          sx={{
+            mt: 100,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 12,
+          }}
+        >
+          <EmptyDataIcon
+            sx={{
+              width: 60,
+              height: 60,
+              borderRadius: (24 / 105) * 60,
+            }}
+          />
           <Box
             sx={{
-              mt: 100,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 12,
+              typography: 'body1',
+              color: theme.palette.text.secondary,
             }}
-          >
-            <EmptyDataIcon
-              sx={{
-                width: 60,
-                height: 60,
-                borderRadius: (24 / 105) * 60,
-              }}
-            />
-            <Box
-              sx={{
-                typography: 'body1',
-                color: theme.palette.text.secondary,
-              }}
-            >{t`Your position is empty`}</Box>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {currentPairPositions !== undefined &&
-            currentPairPositions.length === 0 ? (
-              <Button
-                size={Button.Size.small}
-                onClick={() => {
-                  handleGoToAddLiquidityV3({
-                    from: token0Address,
-                    to: token1Address,
-                    fee: String(feeAmount),
-                  });
-                }}
-              >{t`Add Position`}</Button>
-            ) : (
-              <NeedConnectButton size={Button.Size.small} />
-            )}
-          </Box>
-        </>
+          >{t`Your position is empty`}</Box>
+        </Box>
       )}
     </Box>
   );

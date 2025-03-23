@@ -24,7 +24,7 @@ export const RemoveButton = ({
     <NeedConnectButton includeButton fullWidth chainId={chainId}>
       <Button
         fullWidth
-        size={Button.Size.big}
+        size={Button.Size.middle}
         onClick={onConfirm}
         disabled={disabled}
         isLoading={isLoading}
