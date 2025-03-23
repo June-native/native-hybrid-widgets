@@ -8,7 +8,10 @@ export { default as AddLiquidityV3 } from './widgets/PoolWidget/AMMV3/AddLiquidi
 export { AMMV3PositionsView } from './widgets/PoolWidget/AMMV3/AMMV3PositionsView';
 
 export { NonfungiblePositionManagerABI } from '@native-ammv3/api';
-export { useV3NFTPositionManagerContract } from './widgets/PoolWidget/AMMV3/hooks/useContract';
+export {
+  useV3Factory,
+  useV3NFTPositionManagerContract,
+} from './widgets/PoolWidget/AMMV3/hooks/useContract';
 export { FeeAmount } from './widgets/PoolWidget/AMMV3/sdks/v3-sdk/constants';
 export type { PositionDetails } from './widgets/PoolWidget/AMMV3/types/position';
 

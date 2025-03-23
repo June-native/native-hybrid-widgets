@@ -8,3 +8,11 @@ export function useV3NFTPositionManagerContract(chainId: ChainId | undefined) {
 
   return contract;
 }
+
+export function useV3Factory(chainId: ChainId | undefined) {
+  const contract = chainId
+    ? CHAIN_TO_ADDRESSES_MAP[chainId].v3CoreFactoryAddress
+    : undefined;
+
+  return contract;
+}

@@ -8,6 +8,7 @@ import { useWidgetDevice } from '../../../../hooks/style/useWidgetDevice';
 
 export interface FeeSelectorProps {
   disabled: boolean;
+  feeAmountList?: FeeAmount[];
   feeAmount?: FeeAmount;
   dispatch: React.Dispatch<Actions>;
 }
@@ -15,6 +16,7 @@ export interface FeeSelectorProps {
 export const FeeSelector = ({
   disabled,
   feeAmount,
+  feeAmountList = [FeeAmount.LOW, FeeAmount.MEDIUM, FeeAmount.HIGH],
   dispatch,
 }: FeeSelectorProps) => {
   const theme = useTheme();
@@ -83,12 +85,7 @@ export const FeeSelector = ({
                 }),
           }}
         >
-          {[
-            FeeAmount.LOWEST,
-            FeeAmount.LOW,
-            FeeAmount.MEDIUM,
-            FeeAmount.HIGH,
-          ].map((fee) => {
+          {feeAmountList.map((fee) => {
             const isSelected = feeAmount === fee;
             return (
               <Button

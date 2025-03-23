@@ -35,7 +35,7 @@ import {
   Currency,
   CurrencyAmount,
 } from './sdks/sdk-core';
-import { NonfungiblePositionManager } from './sdks/v3-sdk';
+import { FeeAmount, NonfungiblePositionManager } from './sdks/v3-sdk';
 import { Bound, Field } from './types';
 import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
@@ -43,6 +43,7 @@ import { toSlippagePercent } from './utils/slippage';
 
 export default function AddLiquidityV3({
   params,
+  feeAmountList,
   handleGoBack,
   handleGoToPoolList,
 }: {
@@ -51,6 +52,7 @@ export default function AddLiquidityV3({
     to?: string;
     fee?: string;
   };
+  feeAmountList?: FeeAmount[];
   handleGoBack: () => void;
   handleGoToPoolList: () => void;
 }) {
@@ -379,6 +381,7 @@ export default function AddLiquidityV3({
       >
         <FeeSelector
           disabled={!state.baseToken || !state.quoteToken}
+          feeAmountList={feeAmountList}
           feeAmount={state.feeAmount}
           dispatch={dispatch}
         />
