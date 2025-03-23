@@ -97,7 +97,7 @@ const buttonStyles = (
       break;
 
     default:
-      result.height = 48;
+      result.height = 40;
       result.borderRadius = 8;
       break;
   }
@@ -190,21 +190,14 @@ const buttonStyles = (
     default:
       result = {
         ...result,
-        backgroundColor: danger
-          ? 'error.main'
-          : (backgroundColor ?? 'secondary.main'),
+        backgroundColor: danger ? 'error.main' : (backgroundColor ?? '#1C241C'),
         [hoverLabel]: {
-          background: `linear-gradient(0deg, rgba(26, 26, 27, 0.1), rgba(26, 26, 27, 0.1)), ${
-            danger
-              ? theme.palette.error.main
-              : // @ts-ignore
-                sx?.backgroundColor || theme.palette.secondary.main
-          }`,
+          color: danger ? 'error.contrastText' : alpha('#FFFFFF', 0.5),
         },
-        color: danger ? 'error.contrastText' : 'secondary.contrastText',
+        color: danger ? 'error.contrastText' : '#FFFFFF',
         '&[disabled]': {
-          backgroundColor: 'border.disabled',
-          color: 'text.disabled',
+          backgroundColor: alpha('#1C241C', 0.3),
+          color: '#FFFFFF',
         },
       };
       break;

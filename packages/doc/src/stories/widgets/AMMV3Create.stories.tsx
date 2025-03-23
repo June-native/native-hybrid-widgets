@@ -1,4 +1,38 @@
 import { AddLiquidityV3, Widget } from '@native-ammv3/widgets';
+import {
+  createWeb3Modal,
+  defaultConfig,
+  useWeb3Modal,
+  useWeb3ModalProvider,
+} from '@web3modal/ethers5/react';
+import React from 'react';
+import { Web3Provider } from '@ethersproject/providers';
+
+// 1. Get projectId
+const projectId = '3c0b09fae76fbc7d8d8c04221441d6fd';
+
+// 2. Set chains
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com',
+};
+
+// 3. Create modal
+const metadata = {
+  name: 'My Website',
+  description: 'My Website description',
+  url: 'https://mywebsite.com',
+  icons: ['https://avatars.mywebsite.com/'],
+};
+
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: [mainnet],
+  projectId,
+});
 
 export default {
   title: 'Widgets/AddLiquidityV3',
@@ -8,14 +42,33 @@ export default {
 export const Primary = (props: any) => {
   const { apiKey, ...other } = props;
 
+  const { open } = useWeb3Modal();
+  const { walletProvider } = useWeb3ModalProvider();
+  const ethersProvider = React.useMemo(() => {
+    if (!walletProvider) return undefined;
+    return new Web3Provider(walletProvider);
+  }, [walletProvider]);
+
   return (
-    <Widget {...other} apikey={apiKey}>
+    <Widget
+      {...other}
+      apikey={apiKey}
+      provider={ethersProvider}
+      onConnectWalletClick={() => {
+        open();
+        return true;
+      }}
+    >
       <AddLiquidityV3
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
         params={{
-          from: '0x4200000000000000000000000000000000000006',
-          to: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+          // from: '0x4200000000000000000000000000000000000006',
+          // to: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+          // fee: '500',
+
+          from: '0xd05553BC85FA8c004073d91097B7611CD5E478f5',
+          to: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
           fee: '500',
         }}
       />
@@ -29,7 +82,8 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  onlyChainId: 8453,
+  // onlyChainId: 8453,
+  onlyChainId: 11155111,
   noUI: true,
   tokenList: [
     // {
@@ -81,19 +135,19 @@ Primary.args = {
     //   name: 'Wrapped BTC',
     //   chainId: 1,
     // },
-    {
-      address: '0x4200000000000000000000000000000000000006',
-      decimals: 18,
-      symbol: 'WETH',
-      name: 'Wrapped Ether',
-      chainId: 8453,
-    },
-    {
-      address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
-      decimals: 6,
-      symbol: 'USDC',
-      name: 'USD Coin',
-      chainId: 8453,
-    },
+    // {
+    //   address: '0x4200000000000000000000000000000000000006',
+    //   decimals: 18,
+    //   symbol: 'WETH',
+    //   name: 'Wrapped Ether',
+    //   chainId: 8453,
+    // },
+    // {
+    //   address: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+    //   decimals: 6,
+    //   symbol: 'USDC',
+    //   name: 'USD Coin',
+    //   chainId: 8453,
+    // },
   ],
 };

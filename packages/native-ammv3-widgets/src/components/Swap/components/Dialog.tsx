@@ -129,14 +129,17 @@ function ModalDialog({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              p: 20,
+              px: 20,
+              pt: 20,
+              pb: 28,
             }}
           >
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                typography: 'caption',
+                typography: 'body1',
+                fontWeight: 600,
               }}
             >
               {title}

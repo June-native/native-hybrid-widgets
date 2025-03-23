@@ -70,7 +70,7 @@ export const RangeSelector = ({
         }
         feeAmount={feeAmount}
         label={leftPrice ? `${currencyB?.symbol}` : '-'}
-        title={<Trans>Low price</Trans>}
+        title={<Trans>Min Price</Trans>}
         tokenA={currencyA?.symbol}
         tokenB={currencyB?.symbol}
       />
@@ -95,7 +95,7 @@ export const RangeSelector = ({
         label={rightPrice ? `${currencyB?.symbol}` : '-'}
         tokenA={currencyA?.symbol}
         tokenB={currencyB?.symbol}
-        title={<Trans>High price</Trans>}
+        title={<Trans>Max Price</Trans>}
       />
     </Box>
   );

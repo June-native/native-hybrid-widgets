@@ -62,7 +62,7 @@ export const Buttons = ({
           >
             {showApprovalA && (
               <Button
-                size={Button.Size.big}
+                size={Button.Size.middle}
                 isLoading={approvalA.isApproving}
                 onClick={approvalA.submitApprove}
                 disabled={approvalA.insufficientBalance}
@@ -78,7 +78,7 @@ export const Buttons = ({
 
             {showApprovalB && (
               <Button
-                size={Button.Size.big}
+                size={Button.Size.middle}
                 isLoading={approvalB.isApproving}
                 onClick={approvalB.submitApprove}
                 disabled={approvalB.insufficientBalance}
@@ -96,7 +96,7 @@ export const Buttons = ({
 
         <Button
           fullWidth
-          size={Button.Size.big}
+          size={Button.Size.middle}
           onClick={() => {
             setShowConfirm(true);
           }}

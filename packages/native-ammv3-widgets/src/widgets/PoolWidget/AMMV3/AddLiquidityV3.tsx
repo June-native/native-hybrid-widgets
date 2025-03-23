@@ -3,7 +3,6 @@ import { alpha, Box, Button, useTheme } from '@native-ammv3/components';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
-import { CardPlusConnected } from '../../../components/Swap/components/TokenCard';
 import { NumberInput } from '../../../components/Swap/components/TokenCard/NumberInput';
 import { TokenLogoPair } from '../../../components/TokenLogoPair';
 import { useUserOptions } from '../../../components/UserOptionsProvider';
@@ -428,6 +427,7 @@ export default function AddLiquidityV3({
                     height: 26,
                     typography: 'h6',
                     fontWeight: 600,
+                    borderColor: '#1C241C1A',
                     ...(isMobile
                       ? {
                           flexGrow: 0,
@@ -586,41 +586,51 @@ export default function AddLiquidityV3({
             invalidRange ||
             (noLiquidity && !startPriceTypedValue)
           }
+          sx={{
+            gap: 20,
+          }}
         >
           <Box
             sx={{
-              typography: 'body1',
-              fontWeight: 600,
-              color: theme.palette.text.primary,
-              textAlign: 'left',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
-            {t`Deposit amounts`}
-          </Box>
-          <Box>
-            <CurrencyInputPanel
-              value={formattedAmounts[Field.CURRENCY_A]}
-              onUserInput={onFieldAInput}
-              maxAmount={maxAmounts[Field.CURRENCY_A]}
-              balance={currencyBalances[Field.CURRENCY_A]}
-              currency={currencies[Field.CURRENCY_A] ?? null}
-              locked={depositADisabled}
-            />
-            <CardPlusConnected />
-            <CurrencyInputPanel
-              value={formattedAmounts[Field.CURRENCY_B]}
-              onUserInput={onFieldBInput}
-              maxAmount={maxAmounts[Field.CURRENCY_B]}
-              balance={currencyBalances[Field.CURRENCY_B]}
-              currency={currencies[Field.CURRENCY_B] ?? null}
-              locked={depositBDisabled}
+            <Box
+              sx={{
+                typography: 'body1',
+                fontWeight: 600,
+                color: theme.palette.text.primary,
+                textAlign: 'left',
+              }}
+            >
+              {t`Deposit amounts`}
+            </Box>
+            <SlippageSetting
+              value={slipper}
+              onChange={setSlipper}
+              disabled={false}
+              type="AMMV3"
             />
           </Box>
-          <SlippageSetting
-            value={slipper}
-            onChange={setSlipper}
-            disabled={false}
-            type="AMMV3"
+
+          <CurrencyInputPanel
+            value={formattedAmounts[Field.CURRENCY_A]}
+            onUserInput={onFieldAInput}
+            maxAmount={maxAmounts[Field.CURRENCY_A]}
+            balance={currencyBalances[Field.CURRENCY_A]}
+            currency={currencies[Field.CURRENCY_A] ?? null}
+            locked={depositADisabled}
+          />
+
+          <CurrencyInputPanel
+            value={formattedAmounts[Field.CURRENCY_B]}
+            onUserInput={onFieldBInput}
+            maxAmount={maxAmounts[Field.CURRENCY_B]}
+            balance={currencyBalances[Field.CURRENCY_B]}
+            currency={currencies[Field.CURRENCY_B] ?? null}
+            locked={depositBDisabled}
           />
         </DynamicSection>
       </Box>
@@ -629,8 +639,6 @@ export default function AddLiquidityV3({
         sx={{
           display: 'flex',
           alignItems: 'center',
-          px: 0,
-          py: 16,
         }}
       >
         <Buttons

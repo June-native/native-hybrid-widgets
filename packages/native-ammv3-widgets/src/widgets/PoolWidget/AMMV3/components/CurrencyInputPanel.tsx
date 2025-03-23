@@ -58,9 +58,6 @@ export const CurrencyInputPanel = ({
         pt: 12,
         pb: 20,
         px: 20,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: 'border.main',
         borderRadius: 12,
         backgroundColor: theme.palette.background.input,
       }}

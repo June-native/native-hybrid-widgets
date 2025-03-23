@@ -1,4 +1,4 @@
-import { Box, Button } from '@native-ammv3/components';
+import { Box, ButtonBase } from '@native-ammv3/components';
 import {
   ScaleLinear,
   select,
@@ -101,20 +101,22 @@ export default function Zoom({
   return (
     <Box
       sx={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${showResetButton ? 3 : 2}, 1fr)`,
-        gridGap: '6px',
-        position: 'absolute',
-        top: '-32px',
-        right: 0,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
       }}
     >
+      <Box
+        sx={{
+          mr: 'auto',
+          typography: 'h6',
+          fontWeight: 500,
+        }}
+      >
+        Per
+      </Box>
       {showResetButton && (
-        <Button
-          size={Button.Size.small}
-          sx={{
-            borderRadius: 16,
-          }}
+        <ButtonBase
           onClick={() => {
             resetBrush();
             zoomReset();
@@ -136,57 +138,64 @@ export default function Zoom({
             <polyline points="23 20 23 14 17 14"></polyline>
             <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
           </svg>
-        </Button>
+        </ButtonBase>
       )}
-      <Button
-        size={Button.Size.small}
-        sx={{
-          borderRadius: 16,
-        }}
-        onClick={zoomIn}
-        disabled={false}
-      >
+      <ButtonBase onClick={zoomIn} disabled={false}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
         >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          <line x1="11" y1="8" x2="11" y2="14"></line>
-          <line x1="8" y1="11" x2="14" y2="11"></line>
+          <circle
+            cx="12"
+            cy="12"
+            r="11.5"
+            stroke="#454851"
+            stroke-opacity="0.1"
+          />
+          <mask id="path-2-inside-1_63_1439" fill="white">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M11.25 12.5V15.75H12.75V12.5H16V11H12.75V7.75H11.25V11H8V12.5H11.25Z"
+            />
+          </mask>
+          <path
+            d="M11.25 15.75H10.25V16.75H11.25V15.75ZM11.25 12.5H12.25V11.5H11.25V12.5ZM12.75 15.75V16.75H13.75V15.75H12.75ZM12.75 12.5V11.5H11.75V12.5H12.75ZM16 12.5V13.5H17V12.5H16ZM16 11H17V10H16V11ZM12.75 11H11.75V12H12.75V11ZM12.75 7.75H13.75V6.75H12.75V7.75ZM11.25 7.75V6.75H10.25V7.75H11.25ZM11.25 11V12H12.25V11H11.25ZM8 11V10H7V11H8ZM8 12.5H7V13.5H8V12.5ZM12.25 15.75V12.5H10.25V15.75H12.25ZM12.75 14.75H11.25V16.75H12.75V14.75ZM11.75 12.5V15.75H13.75V12.5H11.75ZM16 11.5H12.75V13.5H16V11.5ZM15 11V12.5H17V11H15ZM12.75 12H16V10H12.75V12ZM11.75 7.75V11H13.75V7.75H11.75ZM11.25 8.75H12.75V6.75H11.25V8.75ZM12.25 11V7.75H10.25V11H12.25ZM8 12H11.25V10H8V12ZM9 12.5V11H7V12.5H9ZM11.25 11.5H8V13.5H11.25V11.5Z"
+            fill="#1A1A1B"
+            fill-opacity="0.5"
+            mask="url(#path-2-inside-1_63_1439)"
+          />
         </svg>
-      </Button>
-      <Button
-        size={Button.Size.small}
-        sx={{
-          borderRadius: 16,
-        }}
-        onClick={zoomOut}
-        disabled={false}
-      >
+      </ButtonBase>
+      <ButtonBase onClick={zoomOut} disabled={false}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
         >
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          <line x1="8" y1="11" x2="14" y2="11"></line>
+          <circle
+            cx="12"
+            cy="12"
+            r="11.5"
+            stroke="#454851"
+            stroke-opacity="0.1"
+          />
+          <rect
+            x="8.375"
+            y="11.375"
+            width="7.25"
+            height="0.75"
+            stroke="#1A1A1B"
+            stroke-opacity="0.5"
+            stroke-width="0.75"
+          />
         </svg>
-      </Button>
+      </ButtonBase>
     </Box>
   );
 }

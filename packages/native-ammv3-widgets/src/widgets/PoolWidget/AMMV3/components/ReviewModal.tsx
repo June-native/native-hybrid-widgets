@@ -37,18 +37,19 @@ export const ReviewModal = ({
       open={on}
       onClose={onClose}
       modal
-      title={t`Add liquidity`}
-      height={683}
+      title={t`Confirm  Add Liquidity`}
+      height={72 + 449}
     >
       <Box
         sx={{
           flex: 1,
           px: 20,
-          pb: 24,
+          pb: 20,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          width: isMobile ? undefined : 420,
+          gap: 28,
+          width: isMobile ? undefined : 560,
         }}
       >
         <Box
@@ -67,16 +68,8 @@ export const ReviewModal = ({
           ) : null}
         </Box>
 
-        <Button
-          size={Button.Size.big}
-          fullWidth
-          isLoading={loading}
-          sx={{
-            mt: 20,
-          }}
-          onClick={onConfirm}
-        >
-          {t`Add`}
+        <Button fullWidth isLoading={loading} onClick={onConfirm}>
+          {t`Confirm`}
         </Button>
       </Box>
     </Dialog>

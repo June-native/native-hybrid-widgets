@@ -1,13 +1,14 @@
+import { Trans } from '@lingui/macro';
+import { PoolType } from '@native-ammv3/api';
 import {
   Box,
   BoxProps,
-  HoverAddBackground,
+  ButtonBase,
   Input,
   Tooltip,
   useTheme,
 } from '@native-ammv3/components';
 import { Setting } from '@native-ammv3/icons';
-import { Trans } from '@lingui/macro';
 import BigNumber from 'bignumber.js';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { AutoButton } from '../../../../components/AutoButton';
@@ -17,7 +18,6 @@ import {
   AUTO_LIQUIDITY_SLIPPAGE_PROTECTION,
   AUTO_SWAP_SLIPPAGE_PROTECTION,
 } from '../../../../constants/pool';
-import { PoolType } from '@native-ammv3/api';
 
 export const useSlipper = ({
   address,
@@ -187,14 +187,14 @@ export default function SlippageSetting({
       arrow={false}
       placement="bottom-end"
     >
-      <HoverAddBackground
+      <ButtonBase
         sx={{
           width: 'max-content',
           alignItems: 'right',
           margin: theme.spacing(0, 0, 0, 'auto'),
-          p: theme.spacing(4, 12),
-          borderRadius: 20,
-          backgroundColor: 'background.paperDarkContrast',
+          p: theme.spacing(4, 4),
+          borderRadius: 8,
+          border: `1px solid #1C241C1A`,
           ...sx,
         }}
       >
@@ -208,7 +208,7 @@ export default function SlippageSetting({
             },
           }}
         />
-      </HoverAddBackground>
+      </ButtonBase>
     </Tooltip>
   );
 }

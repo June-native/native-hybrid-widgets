@@ -54,6 +54,7 @@ export const RateToggle = ({
             borderRadius: 7,
             textAlign: 'center',
             typography: 'h6',
+            fontWeight: 600,
             whiteSpace: 'nowrap',
             ...(isSorted
               ? {
@@ -78,6 +79,7 @@ export const RateToggle = ({
             borderRadius: 7,
             textAlign: 'center',
             typography: 'h6',
+            fontWeight: 600,
             whiteSpace: 'nowrap',
             ...(!isSorted
               ? {

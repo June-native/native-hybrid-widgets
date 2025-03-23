@@ -180,7 +180,7 @@ export default function LiquidityChartRangeInput({
     (formattedData === undefined && !isLoading && !error);
 
   return (
-    <AutoColumn gap="md" style={{ minHeight: '200px' }}>
+    <AutoColumn gap="md" style={{ minHeight: '225px' }}>
       {isUninitialized ? (
         <InfoBox
           message={<Trans>Your position will appear here.</Trans>}
@@ -247,11 +247,17 @@ export default function LiquidityChartRangeInput({
       ) : (
         <Box
           sx={{
-            position: 'relative',
             width: '100%',
-            maxHeight: '200px',
+            maxHeight: '225px',
+            display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
-            alignContent: 'center',
+            alignItems: 'stretch',
+            borderRadius: 12,
+            borderStyle: 'solid',
+            borderWidth: 1,
+            borderColor: '#4548511A',
+            padding: 8,
           }}
         >
           <Chart
