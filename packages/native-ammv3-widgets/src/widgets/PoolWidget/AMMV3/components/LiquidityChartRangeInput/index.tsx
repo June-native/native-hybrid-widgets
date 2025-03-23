@@ -247,7 +247,6 @@ export default function LiquidityChartRangeInput({
       ) : (
         <Box
           sx={{
-            width: '100%',
             maxHeight: '225px',
             display: 'flex',
             flexDirection: 'column',
