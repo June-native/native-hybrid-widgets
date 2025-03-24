@@ -85,7 +85,7 @@ const BASE_ADDRESSES: ChainAddresses = {
   nonfungiblePositionManagerAddress:
     '0x24400D2Ec38Db5881d03e16aEd463B1B48F7304A',
   theGraphUrl:
-    'https://subgraph.satsuma-prod.com/6af7a179712f/native--338080/native-amm-v3-base/version/v0.0.3/api',
+    'https://subgraph.satsuma-prod.com/6af7a179712f/native--338080/native-amm-v3-base/version/v0.0.5/api ',
   poolInitCodeHash:
     '0xdde0fb4ad9d3f7969c77618f019f5f8abf6ccade9fd3ee64ab6bf14968757a85',
 };
