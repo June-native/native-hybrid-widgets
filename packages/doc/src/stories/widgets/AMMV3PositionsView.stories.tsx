@@ -79,8 +79,11 @@ export const Primary = (props: any) => {
       }}
     >
       <AMMV3PositionsView
-        token0Address="0x163D876AF3949f45D934870a1783A040Cf717Bc5"
-        token1Address="0x444d30Eeb001Dc8B7B96cEF088381418B82f9441"
+        // token0Address="0x163D876AF3949f45D934870a1783A040Cf717Bc5"
+        // token1Address="0x444d30Eeb001Dc8B7B96cEF088381418B82f9441"
+        // feeAmount={500}
+        token0Address="0x4200000000000000000000000000000000000006"
+        token1Address="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
         feeAmount={500}
         viewType="add-remove"
         onClose={() => window.alert('onClose')}
@@ -99,5 +102,6 @@ Primary.args = {
   height: '100%',
   noDocumentLink: true,
   noUI: true,
-  // onlyChainId: 1,
+  onlyChainId: 8453,
+  // onlyChainId: 11155111,
 };

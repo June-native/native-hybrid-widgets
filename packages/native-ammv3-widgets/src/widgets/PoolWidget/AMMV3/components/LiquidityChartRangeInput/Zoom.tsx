@@ -153,19 +153,19 @@ export default function Zoom({
             cy="12"
             r="11.5"
             stroke="#454851"
-            stroke-opacity="0.1"
+            strokeOpacity="0.1"
           />
           <mask id="path-2-inside-1_63_1439" fill="white">
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
               d="M11.25 12.5V15.75H12.75V12.5H16V11H12.75V7.75H11.25V11H8V12.5H11.25Z"
             />
           </mask>
           <path
             d="M11.25 15.75H10.25V16.75H11.25V15.75ZM11.25 12.5H12.25V11.5H11.25V12.5ZM12.75 15.75V16.75H13.75V15.75H12.75ZM12.75 12.5V11.5H11.75V12.5H12.75ZM16 12.5V13.5H17V12.5H16ZM16 11H17V10H16V11ZM12.75 11H11.75V12H12.75V11ZM12.75 7.75H13.75V6.75H12.75V7.75ZM11.25 7.75V6.75H10.25V7.75H11.25ZM11.25 11V12H12.25V11H11.25ZM8 11V10H7V11H8ZM8 12.5H7V13.5H8V12.5ZM12.25 15.75V12.5H10.25V15.75H12.25ZM12.75 14.75H11.25V16.75H12.75V14.75ZM11.75 12.5V15.75H13.75V12.5H11.75ZM16 11.5H12.75V13.5H16V11.5ZM15 11V12.5H17V11H15ZM12.75 12H16V10H12.75V12ZM11.75 7.75V11H13.75V7.75H11.75ZM11.25 8.75H12.75V6.75H11.25V8.75ZM12.25 11V7.75H10.25V11H12.25ZM8 12H11.25V10H8V12ZM9 12.5V11H7V12.5H9ZM11.25 11.5H8V13.5H11.25V11.5Z"
             fill="#1A1A1B"
-            fill-opacity="0.5"
+            fillOpacity="0.5"
             mask="url(#path-2-inside-1_63_1439)"
           />
         </svg>
@@ -183,7 +183,7 @@ export default function Zoom({
             cy="12"
             r="11.5"
             stroke="#454851"
-            stroke-opacity="0.1"
+            strokeOpacity="0.1"
           />
           <rect
             x="8.375"
@@ -191,8 +191,8 @@ export default function Zoom({
             width="7.25"
             height="0.75"
             stroke="#1A1A1B"
-            stroke-opacity="0.5"
-            stroke-width="0.75"
+            strokeOpacity="0.5"
+            strokeWidth="0.75"
           />
         </svg>
       </ButtonBase>

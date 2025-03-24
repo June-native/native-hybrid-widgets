@@ -80,14 +80,14 @@ const OKCHAIN_ADDRESSES: ChainAddresses = {
 };
 
 const BASE_ADDRESSES: ChainAddresses = {
-  v3CoreFactoryAddress: '0x3c6154B5a9Bf28807520999F40d8647d4942D395',
-  NativeV3PoolDeployer: '0xBA8dB0CAf781cAc69b6acf6C848aC148264Cc05d',
+  v3CoreFactoryAddress: '0xC7000871C318b1f038564afd94FdcEEC4F2C8d2e',
+  NativeV3PoolDeployer: '0xA7B0d47004C4db88827B5263df8253aAc810995E',
   nonfungiblePositionManagerAddress:
-    '0xe3D41d19564922C9952f692C5Dd0563030f5f2EF',
+    '0x24400D2Ec38Db5881d03e16aEd463B1B48F7304A',
   theGraphUrl:
-    'https://gateway.thegraph.com/api/8537b0b51ae5a8474073019fedc65481/subgraphs/id/3NUY93m3pDzhT4numRAoxVaKWUhrQPBu6KZ5feeB5igy',
+    'https://subgraph.satsuma-prod.com/6af7a179712f/native--338080/native-amm-v3-base/version/v0.0.3/api',
   poolInitCodeHash:
-    '0x110f971109df8022508055738d0597e74de19b0a45f6fb436e01284112b66daf',
+    '0xdde0fb4ad9d3f7969c77618f019f5f8abf6ccade9fd3ee64ab6bf14968757a85',
 };
 
 export const CHAIN_TO_ADDRESSES_MAP: Record<

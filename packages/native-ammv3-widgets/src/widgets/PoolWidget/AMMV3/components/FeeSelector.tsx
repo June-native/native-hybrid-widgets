@@ -16,7 +16,12 @@ export interface FeeSelectorProps {
 export const FeeSelector = ({
   disabled,
   feeAmount,
-  feeAmountList = [FeeAmount.LOW, FeeAmount.MEDIUM, FeeAmount.HIGH],
+  feeAmountList = [
+    FeeAmount.LOWEST,
+    FeeAmount.LOW,
+    FeeAmount.MEDIUM,
+    FeeAmount.HIGH,
+  ],
   dispatch,
 }: FeeSelectorProps) => {
   const theme = useTheme();

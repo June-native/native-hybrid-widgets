@@ -206,7 +206,7 @@ export const PositionViewCard = ({
             <path
               d="M14.25 3L11.25 6L10.2 4.95L11.3813 3.75L3.61875 3.75L4.8 4.95L3.75 6L0.75 3L3.75 -1.31134e-07L4.81875 1.05L3.61875 2.25L11.3813 2.25L10.2 1.05L11.25 -4.5897e-07L14.25 3Z"
               fill="#939393"
-              fill-opacity="0.5"
+              fillOpacity="0.5"
             />
           </svg>
           <Box
@@ -292,11 +292,11 @@ export const PositionViewCard = ({
               viewBox="0 0 18 18"
               fill="none"
             >
-              <circle cx="9" cy="9" r="9" fill="#1C241C" fill-opacity="0.1" />
+              <circle cx="9" cy="9" r="9" fill="#1C241C" fillOpacity="0.1" />
               <path
                 d="M9.5 6.5H4.5V8H13.5L9.5 4.25V6.5ZM8.25 13.75V11.5H13.5V10H4.5L8.25 13.75Z"
                 fill="#1C241C"
-                fill-opacity="0.5"
+                fillOpacity="0.5"
               />
             </svg>
           </ButtonBase>

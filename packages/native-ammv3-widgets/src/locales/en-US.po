@@ -153,7 +153,7 @@ msgstr "Deposit Ratio"
 msgid "Ended"
 msgstr "Ended"
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:80
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:85
 msgid "More"
 msgstr "More"
 
@@ -588,7 +588,7 @@ msgid "Pool address"
 msgstr "Pool address"
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:198
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:62
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:67
 msgid "Fee tier"
 msgstr "Fee tier"
 
@@ -773,7 +773,7 @@ msgstr "Connecting..."
 msgid "Additional Fee"
 msgstr "Additional Fee"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:266
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:268
 msgid "Your position is empty"
 msgstr "Your position is empty"
 
@@ -1669,7 +1669,7 @@ msgstr "Rate"
 msgid "Balance"
 msgstr "Balance"
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:61
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:66
 msgid "fee tier"
 msgstr "fee tier"
 
@@ -2223,7 +2223,7 @@ msgstr "Max Slippage"
 msgid "User denied transaction signature."
 msgstr "User denied transaction signature."
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:80
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:85
 msgid "Less"
 msgstr "Less"
 

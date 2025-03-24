@@ -92,12 +92,14 @@ export const AMMV3PositionsView = ({
     if (positions === undefined) {
       return undefined;
     }
-    return positions.filter(
-      (p) =>
+    return positions.filter((p) => {
+      return (
         areAddressesEqual(token0?.address, p.token0) &&
         areAddressesEqual(token1?.address, p.token1) &&
-        p.fee === feeAmount,
-    );
+        p.fee === feeAmount &&
+        p.liquidity !== '0'
+      );
+    });
   }, [feeAmount, positions, token0?.address, token1?.address]);
 
   if (manageItem !== null) {

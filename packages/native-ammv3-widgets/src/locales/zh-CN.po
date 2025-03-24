@@ -153,7 +153,7 @@ msgstr ""
 msgid "Ended"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:80
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:85
 msgid "More"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgid "Pool address"
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/ConfirmDialog.tsx:198
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:62
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:67
 msgid "Fee tier"
 msgstr ""
 
@@ -773,7 +773,7 @@ msgstr "连接中..."
 msgid "Additional Fee"
 msgstr "额外手续费"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:266
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:268
 msgid "Your position is empty"
 msgstr ""
 
@@ -1669,7 +1669,7 @@ msgstr ""
 msgid "Balance"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:61
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:66
 msgid "fee tier"
 msgstr ""
 
@@ -2223,7 +2223,7 @@ msgstr ""
 msgid "User denied transaction signature."
 msgstr "用户拒绝交易签名."
 
-#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:80
+#: src/widgets/PoolWidget/AMMV3/components/FeeSelector.tsx:85
 msgid "Less"
 msgstr ""
 
