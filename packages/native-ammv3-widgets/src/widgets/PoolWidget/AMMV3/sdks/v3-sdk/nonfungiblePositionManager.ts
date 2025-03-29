@@ -202,6 +202,16 @@ export interface RemoveLiquidityOptions {
    * Parameters to be passed on to collect
    */
   collectOptions: Omit<CollectOptions, 'tokenId'>;
+
+  /**
+   * Parameters to be passed on to collect
+   */
+  redeemOptions: {
+    /**
+     * The account that should receive the tokens.
+     */
+    recipient: string;
+  };
 }
 
 export abstract class NonfungiblePositionManager {
@@ -382,9 +392,34 @@ export abstract class NonfungiblePositionManager {
 
   public static collectCallParameters(
     options: CollectOptions,
+    /**
+     * Parameters to be passed on to collect
+     */
+    redeemOptions: {
+      token0: string;
+      token1: string;
+      /**
+       * The account that should receive the tokens.
+       */
+      recipient: string;
+    },
   ): MethodParameters {
     const calldatas: string[] =
       NonfungiblePositionManager.encodeCollect(options);
+
+    // redeem
+    calldatas.push(
+      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+        redeemOptions.token0,
+        redeemOptions.recipient,
+      ]),
+    );
+    calldatas.push(
+      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+        redeemOptions.token1,
+        redeemOptions.recipient,
+      ]),
+    );
 
     return {
       calldata: Multicall.encodeMulticall(calldatas),
@@ -473,6 +508,20 @@ export abstract class NonfungiblePositionManager {
         ),
         ...rest,
       }),
+    );
+
+    // redeem
+    calldatas.push(
+      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+        position.pool.token0.lpTokenAddress,
+        options.redeemOptions.recipient,
+      ]),
+    );
+    calldatas.push(
+      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+        position.pool.token1.lpTokenAddress,
+        options.redeemOptions.recipient,
+      ]),
     );
 
     if (options.liquidityPercentage.equalTo(ONE)) {

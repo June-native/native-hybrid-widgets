@@ -190,8 +190,8 @@ msgstr ""
 msgid "Do not remind again"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:172
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:216
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:178
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionRemove.tsx:222
 #: src/widgets/PoolWidget/PoolOperate/RemovePoolOperate.tsx:261
 msgid "Remove Liquidity"
 msgstr ""
@@ -773,7 +773,7 @@ msgstr "连接中..."
 msgid "Additional Fee"
 msgstr "额外手续费"
 
-#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:268
+#: src/widgets/PoolWidget/AMMV3/AMMV3PositionsView.tsx:278
 msgid "Your position is empty"
 msgstr ""
 
@@ -2298,7 +2298,7 @@ msgid "Transaction Deadline"
 msgstr "交易截止时间"
 
 #: src/widgets/MiningWidget/MiningList/hooks/useDepositOrWithdrawOrClaim.ts:190
-#: src/widgets/PoolWidget/AMMV3/components/PositionClaimCard.tsx:100
+#: src/widgets/PoolWidget/AMMV3/components/PositionClaimCard.tsx:109
 msgid "Claim Rewards"
 msgstr ""
 

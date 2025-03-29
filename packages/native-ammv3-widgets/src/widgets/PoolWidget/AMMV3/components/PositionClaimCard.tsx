@@ -75,21 +75,30 @@ export const PositionClaimCard = ({
         return;
       }
 
+      const { nonfungiblePositionManagerAddress } =
+        CHAIN_TO_ADDRESSES_MAP[chainId];
+      if (!nonfungiblePositionManagerAddress) {
+        return;
+      }
+
       try {
         const { calldata, value } =
-          NonfungiblePositionManager.collectCallParameters({
-            tokenId: p.tokenId.toString(),
-            expectedCurrencyOwed0:
-              feeValue0 ?? CurrencyAmount.fromRawAmount(pool.token0, 0),
-            expectedCurrencyOwed1:
-              feeValue1 ?? CurrencyAmount.fromRawAmount(pool.token1, 0),
-            recipient: account,
-          });
-        const { nonfungiblePositionManagerAddress } =
-          CHAIN_TO_ADDRESSES_MAP[chainId];
-        if (!nonfungiblePositionManagerAddress) {
-          return;
-        }
+          NonfungiblePositionManager.collectCallParameters(
+            {
+              tokenId: p.tokenId.toString(),
+              expectedCurrencyOwed0:
+                feeValue0 ?? CurrencyAmount.fromRawAmount(pool.token0, 0),
+              expectedCurrencyOwed1:
+                feeValue1 ?? CurrencyAmount.fromRawAmount(pool.token1, 0),
+              recipient: nonfungiblePositionManagerAddress,
+            },
+            {
+              token0: pool.token0.lpTokenAddress,
+              token1: pool.token1.lpTokenAddress,
+              recipient: account,
+            },
+          );
+
         let txn: { to: string; data: string; value: string } = {
           to: nonfungiblePositionManagerAddress,
           data: calldata,
@@ -218,7 +227,12 @@ export const PositionClaimCard = ({
 
       <ClaimButton
         chainId={chainId}
-        disabled={onClaimMutation.isPending}
+        disabled={
+          onClaimMutation.isPending ||
+          !feeValue0 ||
+          !feeValue1 ||
+          (feeValue0.equalTo(0) && feeValue1.equalTo(0))
+        }
         onConfirm={onClaimMutation.mutate}
         isLoading={onClaimMutation.isPending}
       />

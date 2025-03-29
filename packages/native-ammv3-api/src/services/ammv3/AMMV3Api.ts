@@ -212,7 +212,7 @@ export class AMMV3Api {
           params: [
             {
               tokenId,
-              recipient, // some tokens might fail if transferred to address(0)
+              recipient: contractAddress, // some tokens might fail if transferred to address(0)
               amount0Max: MAX_UINT128,
               amount1Max: MAX_UINT128,
             },

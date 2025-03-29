@@ -21,7 +21,9 @@ import { areAddressesEqual, buildCurrency } from './utils';
 
 export interface AMMV3PositionsViewProps {
   token0Address: string;
+  token0LpAddress: string;
   token1Address: string;
+  token1LpAddress: string;
   feeAmount: FeeAmount;
   viewType: 'add-remove' | 'claim';
   onClose: (() => void) | undefined;
@@ -34,7 +36,9 @@ export interface AMMV3PositionsViewProps {
 
 export const AMMV3PositionsView = ({
   token0Address,
+  token0LpAddress,
   token1Address,
+  token1LpAddress,
   feeAmount,
   viewType,
   onClose,
@@ -61,16 +65,22 @@ export const AMMV3PositionsView = ({
   const currencyA = useMemo(
     () =>
       defaultToken0Query.data
-        ? buildCurrency(defaultToken0Query.data)
+        ? buildCurrency({
+            ...defaultToken0Query.data,
+            lpTokenAddress: token0LpAddress,
+          })
         : undefined,
-    [defaultToken0Query],
+    [defaultToken0Query, token0LpAddress],
   );
   const currencyB = useMemo(
     () =>
       defaultToken1Query.data
-        ? buildCurrency(defaultToken1Query.data)
+        ? buildCurrency({
+            ...defaultToken1Query.data,
+            lpTokenAddress: token1LpAddress,
+          })
         : undefined,
-    [defaultToken1Query],
+    [defaultToken1Query, token1LpAddress],
   );
 
   const [tokenA, tokenB] = useMemo(
@@ -94,13 +104,13 @@ export const AMMV3PositionsView = ({
     }
     return positions.filter((p) => {
       return (
-        areAddressesEqual(token0?.address, p.token0) &&
-        areAddressesEqual(token1?.address, p.token1) &&
+        areAddressesEqual(token0?.lpTokenAddress, p.token0) &&
+        areAddressesEqual(token1?.lpTokenAddress, p.token1) &&
         p.fee === feeAmount &&
         p.liquidity !== '0'
       );
     });
-  }, [feeAmount, positions, token0?.address, token1?.address]);
+  }, [feeAmount, positions, token0?.lpTokenAddress, token1?.lpTokenAddress]);
 
   if (manageItem !== null) {
     if (manageItem.type === 'add') {

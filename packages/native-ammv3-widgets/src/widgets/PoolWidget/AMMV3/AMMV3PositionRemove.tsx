@@ -140,6 +140,12 @@ export const AMMV3PositionRemove = ({
 
       const deadline = Math.ceil(Date.now() / 1000) + (ddl ?? 10 * 60);
 
+      const { nonfungiblePositionManagerAddress } =
+        CHAIN_TO_ADDRESSES_MAP[chainId];
+      if (!nonfungiblePositionManagerAddress) {
+        return;
+      }
+
       try {
         const { calldata, value } =
           NonfungiblePositionManager.removeCallParameters(positionSDK, {
@@ -154,14 +160,14 @@ export const AMMV3PositionRemove = ({
               expectedCurrencyOwed1:
                 feeValue1Remove ??
                 CurrencyAmount.fromRawAmount(liquidityValue1.currency, 0),
+              // https://automatic-spear-7fd.notion.site/Native-Hybrid-AMM-Liquidity-Actions-1c46a18f090580d5ae51cafe536d92a1#1c46a18f090580899aa1c2d0aded10d5
+              recipient: nonfungiblePositionManagerAddress,
+            },
+            redeemOptions: {
               recipient: account,
             },
           });
-        const { nonfungiblePositionManagerAddress } =
-          CHAIN_TO_ADDRESSES_MAP[chainId];
-        if (!nonfungiblePositionManagerAddress) {
-          return;
-        }
+
         let txn: { to: string; data: string; value: string } = {
           to: nonfungiblePositionManagerAddress,
           data: calldata,
