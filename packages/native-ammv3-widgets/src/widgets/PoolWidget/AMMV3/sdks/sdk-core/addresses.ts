@@ -68,7 +68,12 @@ const SEPOLIA_ADDRESSES: ChainAddresses = {
 };
 
 const ARBITRUM_SEPOLIA_ADDRESSES: ChainAddresses = {
-  ...DEFAULT_ADDRESSES,
+  v3CoreFactoryAddress: '0x241Fb4e9F9518F9324fb8Bf042EaB5E564e881FB',
+  NativeV3PoolDeployer: '0xca99D5E976d45Aa7bB142F405a5afc050dDaA948',
+  nonfungiblePositionManagerAddress:
+    '0xF582f3D26103f91D9828613453d98065aea4C49a',
+  poolInitCodeHash:
+    '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
 
 const BSC_ADDRESSES: ChainAddresses = {
