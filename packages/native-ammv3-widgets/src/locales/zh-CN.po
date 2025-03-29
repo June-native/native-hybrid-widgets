@@ -251,11 +251,11 @@ msgstr ""
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "当前网络与钱包不一致，请在钱包中切换"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:405
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:413
 msgid "Set price range"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:439
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:447
 msgid "Full range"
 msgstr ""
 
@@ -373,7 +373,7 @@ msgstr ""
 msgid "Success Rate"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:263
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:271
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:339
 msgid "Pool Creation"
 msgstr ""
@@ -536,7 +536,7 @@ msgstr ""
 msgid "Approving {0}..."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:557
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:565
 msgid "Current price"
 msgstr ""
 
@@ -806,7 +806,7 @@ msgstr ""
 msgid "Fetching best price..."
 msgstr "获取最优价格中..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:501
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:509
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr ""
 
@@ -916,7 +916,7 @@ msgid "The pegged exchange rate refers to the exchange rate between two token as
 msgstr ""
 
 #: src/widgets/PoolWidget/AMMV2Create/index.tsx:278
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:608
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:616
 msgid "Deposit amounts"
 msgstr ""
 
@@ -1326,7 +1326,7 @@ msgstr ""
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:526
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:534
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr ""
 
@@ -1483,11 +1483,11 @@ msgstr "分钟"
 msgid "Off"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:496
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:504
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:559
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:567
 msgid "per"
 msgstr ""
 
@@ -2306,7 +2306,7 @@ msgstr ""
 msgid "My Pools (PMM)"
 msgstr ""
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:515
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:523
 msgid "Starting price"
 msgstr ""
 

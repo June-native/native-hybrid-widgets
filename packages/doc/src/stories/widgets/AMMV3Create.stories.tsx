@@ -63,13 +63,28 @@ export const Primary = (props: any) => {
         handleGoBack={() => window.alert('handleGoBack')}
         handleGoToPoolList={() => window.alert('handleGoToPoolList')}
         params={{
-          from: '0x4200000000000000000000000000000000000006',
-          to: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
-          fee: '500',
+          // from: '0x4200000000000000000000000000000000000006',
+          // to: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913',
+          // fee: '500',
 
           // from: '0xd05553BC85FA8c004073d91097B7611CD5E478f5',
           // to: '0x444d30Eeb001Dc8B7B96cEF088381418B82f9441',
           // fee: '500',
+
+          // 421614
+          // address: '0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6', // mock SHELL
+          // lpTokenAddress: '0xbde3d0e47627bf56282a0ab5d64eba133f0a4421', // NTLP-SHELL
+          // NTLP-SHELL
+          from: '0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6',
+          fromLp: '0xbde3d0e47627bf56282a0ab5d64eba133f0a4421',
+
+          // address: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2', // Mock Token PI
+          // lpTokenAddress: '0xc5bad597236208fb2b022852664c135c259cb05a', // NTLP-PI
+          // NTLP-PI
+          to: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2',
+          toLp: '0xc5bad597236208fb2b022852664c135c259cb05a',
+
+          fee: '10000',
         }}
       />
     </Widget>
@@ -82,7 +97,8 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  onlyChainId: 8453,
+  onlyChainId: 421614,
+  // onlyChainId: 8453,
   // onlyChainId: 11155111,
   noUI: true,
   tokenList: [

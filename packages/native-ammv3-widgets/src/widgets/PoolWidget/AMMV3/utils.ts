@@ -46,12 +46,13 @@ export function buildCurrency(
     return undefined;
   }
 
-  const { name, chainId, address, decimals, symbol } = token;
+  const { name, chainId, address, decimals, symbol, lpTokenAddress } = token;
 
   const result = isNonNativeAddress(chainId, address)
     ? new Token(
         chainId,
         address,
+        lpTokenAddress,
         decimals,
         symbol ?? undefined,
         name ?? undefined,
@@ -70,6 +71,7 @@ export function convertBackToTokenInfo(
   return {
     chainId: currency.chainId,
     address: currency.address,
+    lpTokenAddress: currency.lpTokenAddress,
     decimals: currency.decimals,
     symbol: currency.symbol ?? '',
     name: currency.name ?? '',

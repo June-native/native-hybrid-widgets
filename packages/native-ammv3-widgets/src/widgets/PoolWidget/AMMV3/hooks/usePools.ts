@@ -27,8 +27,8 @@ export class PoolCache {
       this.addresses = this.addresses.slice(0, this.MAX_ENTRIES / 2);
     }
 
-    const { address: addressA } = tokenA;
-    const { address: addressB } = tokenB;
+    const { lpTokenAddress: addressA } = tokenA;
+    const { lpTokenAddress: addressB } = tokenB;
     const key = `${addressA}:${addressB}:${fee.toString()}`;
     const found = this.addresses.find((address) => address.key === key);
     if (found) {

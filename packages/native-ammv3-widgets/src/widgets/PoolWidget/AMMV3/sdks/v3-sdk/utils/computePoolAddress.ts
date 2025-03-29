@@ -34,7 +34,7 @@ export function computePoolAddress({
     [
       defaultAbiCoder.encode(
         ['address', 'address', 'uint24'],
-        [token0.address, token1.address, fee],
+        [token0.lpTokenAddress, token1.lpTokenAddress, fee],
       ),
     ],
   );

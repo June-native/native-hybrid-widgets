@@ -218,8 +218,8 @@ export abstract class NonfungiblePositionManager {
     return NonfungiblePositionManager.INTERFACE.encodeFunctionData(
       'createAndInitializePoolIfNecessary',
       [
-        pool.token0.address,
-        pool.token1.address,
+        pool.token0.lpTokenAddress,
+        pool.token1.lpTokenAddress,
         pool.fee,
         toHex(pool.sqrtRatioX96),
       ],
@@ -278,8 +278,8 @@ export abstract class NonfungiblePositionManager {
       calldatas.push(
         NonfungiblePositionManager.INTERFACE.encodeFunctionData('mint', [
           {
-            token0: position.pool.token0.address,
-            token1: position.pool.token1.address,
+            token0: position.pool.token0.lpTokenAddress,
+            token1: position.pool.token1.lpTokenAddress,
             fee: position.pool.fee,
             tickLower: position.tickLower,
             tickUpper: position.tickUpper,

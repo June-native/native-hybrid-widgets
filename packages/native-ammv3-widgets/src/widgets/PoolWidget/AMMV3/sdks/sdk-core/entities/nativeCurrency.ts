@@ -14,6 +14,7 @@ export class NativeCurrency implements NativeCurrencyClass {
     this.isNative = true;
     this.isToken = false;
     this.address = getNativeAddress(this.chainId);
+    this.lpTokenAddress = getNativeAddress(this.chainId);
   }
 
   chainId: ChainId;
@@ -23,6 +24,7 @@ export class NativeCurrency implements NativeCurrencyClass {
   isNative: true;
   isToken: false;
   address: string;
+  lpTokenAddress: string;
 
   equals(currency: Currency): boolean {
     return currency.isNative && currency.chainId === this.chainId;
@@ -32,6 +34,7 @@ export class NativeCurrency implements NativeCurrencyClass {
     const wrappedCurrencyInfo = basicTokenMap[this.chainId as ChainId];
     return new Token(
       this.chainId,
+      wrappedCurrencyInfo.wrappedTokenAddress,
       wrappedCurrencyInfo.wrappedTokenAddress,
       wrappedCurrencyInfo.decimals,
       wrappedCurrencyInfo.wrappedTokenSymbol,

@@ -48,7 +48,9 @@ export default function AddLiquidityV3({
 }: {
   params?: {
     from?: string;
+    fromLp?: string;
     to?: string;
+    toLp?: string;
     fee?: string;
   };
   feeAmountList?: FeeAmount[];
@@ -79,23 +81,29 @@ export default function AddLiquidityV3({
   });
 
   useEffect(() => {
-    if (!defaultBaseTokenQuery.data) {
+    if (!defaultBaseTokenQuery.data || !params?.fromLp) {
       return;
     }
     dispatch({
       type: Types.UpdateDefaultBaseToken,
-      payload: defaultBaseTokenQuery.data,
+      payload: {
+        ...defaultBaseTokenQuery.data,
+        lpTokenAddress: params.fromLp,
+      },
     });
-  }, [defaultBaseTokenQuery]);
+  }, [defaultBaseTokenQuery, params?.fromLp]);
   useEffect(() => {
-    if (!defaultQuoteTokenQuery.data) {
+    if (!defaultQuoteTokenQuery.data || !params?.toLp) {
       return;
     }
     dispatch({
       type: Types.UpdateDefaultQuoteToken,
-      payload: defaultQuoteTokenQuery.data,
+      payload: {
+        ...defaultQuoteTokenQuery.data,
+        lpTokenAddress: params.toLp,
+      },
     });
-  }, [defaultQuoteTokenQuery]);
+  }, [defaultQuoteTokenQuery, params?.toLp]);
 
   const { independentField, typedValue, startPriceTypedValue } = state;
 

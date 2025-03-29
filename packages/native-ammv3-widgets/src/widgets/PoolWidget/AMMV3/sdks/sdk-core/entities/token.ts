@@ -1,32 +1,37 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import invariant from 'tiny-invariant'
-import { checkValidAddress, validateAndParseAddress } from '../utils/validateAndParseAddress'
-import { BaseCurrency } from './baseCurrency'
-import { Currency } from './currency'
+import { BigNumber } from '@ethersproject/bignumber';
+import invariant from 'tiny-invariant';
+import {
+  checkValidAddress,
+  validateAndParseAddress,
+} from '../utils/validateAndParseAddress';
+import { BaseCurrency } from './baseCurrency';
+import { Currency } from './currency';
 
 /**
  * Represents an ERC20 token with a unique address and some metadata.
  */
 export class Token extends BaseCurrency {
-  public readonly isNative: false = false
-  public readonly isToken: true = true
+  public readonly isNative: false = false;
+  public readonly isToken: true = true;
 
   /**
    * The contract address on the chain on which this token lives
    */
-  public readonly address: string
+  public readonly address: string;
+  public readonly lpTokenAddress: string;
 
   /**
    * Relevant for fee-on-transfer (FOT) token taxes,
    * Not every ERC20 token is FOT token, so this field is optional
    */
-  public readonly buyFeeBps?: BigNumber
-  public readonly sellFeeBps?: BigNumber
+  public readonly buyFeeBps?: BigNumber;
+  public readonly sellFeeBps?: BigNumber;
 
   /**
    *
    * @param chainId {@link BaseCurrency#chainId}
    * @param address The contract address on the chain on which this token lives
+   * @param lpTokenAddress
    * @param decimals {@link BaseCurrency#decimals}
    * @param symbol {@link BaseCurrency#symbol}
    * @param name {@link BaseCurrency#name}
@@ -37,27 +42,29 @@ export class Token extends BaseCurrency {
   public constructor(
     chainId: number,
     address: string,
+    lpTokenAddress: string,
     decimals: number,
     symbol?: string,
     name?: string,
     bypassChecksum?: boolean,
     buyFeeBps?: BigNumber,
-    sellFeeBps?: BigNumber
+    sellFeeBps?: BigNumber,
   ) {
-    super(chainId, decimals, symbol, name)
+    super(chainId, decimals, symbol, name);
     if (bypassChecksum) {
-      this.address = checkValidAddress(address)
+      this.address = checkValidAddress(address);
     } else {
-      this.address = validateAndParseAddress(address)
+      this.address = validateAndParseAddress(address);
     }
+    this.lpTokenAddress = lpTokenAddress;
     if (buyFeeBps) {
-      invariant(buyFeeBps.gte(BigNumber.from(0)), 'NON-NEGATIVE FOT FEES')
+      invariant(buyFeeBps.gte(BigNumber.from(0)), 'NON-NEGATIVE FOT FEES');
     }
     if (sellFeeBps) {
-      invariant(sellFeeBps.gte(BigNumber.from(0)), 'NON-NEGATIVE FOT FEES')
+      invariant(sellFeeBps.gte(BigNumber.from(0)), 'NON-NEGATIVE FOT FEES');
     }
-    this.buyFeeBps = buyFeeBps
-    this.sellFeeBps = sellFeeBps
+    this.buyFeeBps = buyFeeBps;
+    this.sellFeeBps = sellFeeBps;
   }
 
   /**
@@ -65,7 +72,12 @@ export class Token extends BaseCurrency {
    * @param other other token to compare
    */
   public equals(other: Currency): boolean {
-    return other.isToken && this.chainId === other.chainId && this.address.toLowerCase() === other.address.toLowerCase()
+    return (
+      other.isToken &&
+      this.chainId === other.chainId &&
+      this.address.toLowerCase() === other.address.toLowerCase() &&
+      this.lpTokenAddress.toLowerCase() === other.lpTokenAddress.toLowerCase()
+    );
   }
 
   /**
@@ -75,15 +87,20 @@ export class Token extends BaseCurrency {
    * @throws if the tokens are on different chains
    */
   public sortsBefore(other: Token): boolean {
-    invariant(this.chainId === other.chainId, 'CHAIN_IDS')
-    invariant(this.address.toLowerCase() !== other.address.toLowerCase(), 'ADDRESSES')
-    return this.address.toLowerCase() < other.address.toLowerCase()
+    invariant(this.chainId === other.chainId, 'CHAIN_IDS');
+    invariant(
+      this.lpTokenAddress.toLowerCase() !== other.lpTokenAddress.toLowerCase(),
+      'ADDRESSES',
+    );
+    return (
+      this.lpTokenAddress.toLowerCase() < other.lpTokenAddress.toLowerCase()
+    );
   }
 
   /**
    * Return this token, which does not need to be wrapped
    */
   public get wrapped(): Token {
-    return this
+    return this;
   }
 }
