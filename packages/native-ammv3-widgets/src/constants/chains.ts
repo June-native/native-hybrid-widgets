@@ -26,6 +26,7 @@ export const rpcServerMap: {
   ],
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.BASE]: ['https://mainnet.base.org'],
+  [ChainId.BERACHAIN]: ['https://rpc.berachain.com'],
 };
 export const getRpcSingleUrlMap = (newRpcServerMap?: {
   [chainId: number]: string[];
@@ -53,6 +54,7 @@ export const scanUrlDomainMap: {
   [ChainId.BSC]: 'bscscan.com',
   [ChainId.OKCHAIN]: 'www.oklink.com/okexchain',
   [ChainId.BASE]: 'basescan.org',
+  [ChainId.BERACHAIN]: 'berascan.com',
   [ChainId.ARBITRUM_ONE]: 'arbiscan.io',
   [ChainId.ARBITRUM_SEPOLIA]: 'sepolia.arbiscan.io',
   [ChainId.SEPOLIA]: 'sepolia.etherscan.io',
@@ -68,4 +70,5 @@ export const ThegraphKeyMap: {
   [ChainId.OKCHAIN]: 'okchain',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.BASE]: 'base',
+  [ChainId.BERACHAIN]: 'berachain',
 };

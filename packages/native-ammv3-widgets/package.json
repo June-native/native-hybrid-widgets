@@ -1,6 +1,6 @@
 {
   "name": "@native-ammv3/widgets",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "NATIVE Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.0",
-    "@native-ammv3/api": "^0.0.6",
+    "@native-ammv3/api": "^0.0.7",
     "@native-ammv3/components": "^0.0.2",
     "@native-ammv3/icons": "^0.0.1",
     "@emotion/react": "^11.10.0",

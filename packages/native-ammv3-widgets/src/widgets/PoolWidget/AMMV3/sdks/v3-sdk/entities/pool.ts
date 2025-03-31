@@ -46,7 +46,7 @@ export class Pool {
       fee,
       tokenA,
       tokenB,
-      chainId: chainId ?? ChainId.BASE,
+      chainId: chainId ?? ChainId.BERACHAIN,
     });
   }
 

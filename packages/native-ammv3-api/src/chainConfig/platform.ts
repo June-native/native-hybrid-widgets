@@ -10,4 +10,5 @@ export const platformIdMap: {
   [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.BASE]: 'base',
+  [ChainId.BERACHAIN]: 'berachain',
 };

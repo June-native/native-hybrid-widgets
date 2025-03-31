@@ -56,4 +56,11 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WETH',
     wrappedTokenAddress: '0x4200000000000000000000000000000000000006',
   },
+  [ChainId.BERACHAIN]: {
+    ...DEFAULT_BASIC_TOKEN,
+    symbol: 'BERA',
+    name: 'BERA',
+    wrappedTokenSymbol: 'WBERA',
+    wrappedTokenAddress: '0x6969696969696969696969696969696969696969',
+  },
 };

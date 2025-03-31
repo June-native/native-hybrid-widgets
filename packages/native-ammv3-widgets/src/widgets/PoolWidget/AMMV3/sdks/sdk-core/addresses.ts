@@ -90,9 +90,20 @@ const BASE_ADDRESSES: ChainAddresses = {
   nonfungiblePositionManagerAddress:
     '0x24400D2Ec38Db5881d03e16aEd463B1B48F7304A',
   theGraphUrl:
-    'https://subgraph.satsuma-prod.com/6af7a179712f/native--338080/native-amm-v3-base/version/v0.0.5/api ',
+    'https://subgraph.satsuma-prod.com/6af7a179712f/native--338080/native-amm-v3-base/version/v0.0.5/api',
   poolInitCodeHash:
     '0xdde0fb4ad9d3f7969c77618f019f5f8abf6ccade9fd3ee64ab6bf14968757a85',
+};
+
+const BERACHAIN_ADDRESSES: ChainAddresses = {
+  v3CoreFactoryAddress: '0xB4cCd44D3bABe05DfC70b39944796d281AE905EE',
+  NativeV3PoolDeployer: '0x93c69485C572aca0467A395aF6f5c7FE49FCA83F',
+  nonfungiblePositionManagerAddress:
+    '0x1112f006B25FFA661Bf2B0DcEcd4e4F5d0c794A3',
+  theGraphUrl:
+    'https://api.studio.thegraph.com/query/106537/native-hybrid-berachain-mainnet/version/latest',
+  poolInitCodeHash:
+    '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
 
 export const CHAIN_TO_ADDRESSES_MAP: Record<
@@ -106,4 +117,5 @@ export const CHAIN_TO_ADDRESSES_MAP: Record<
   [ChainId.BSC]: BSC_ADDRESSES,
   [ChainId.OKCHAIN]: OKCHAIN_ADDRESSES,
   [ChainId.BASE]: BASE_ADDRESSES,
+  [ChainId.BERACHAIN]: BERACHAIN_ADDRESSES,
 };

@@ -75,16 +75,22 @@ export const Primary = (props: any) => {
           // address: '0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6', // mock SHELL
           // lpTokenAddress: '0xbde3d0e47627bf56282a0ab5d64eba133f0a4421', // NTLP-SHELL
           // NTLP-SHELL
-          from: '0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6',
-          fromLp: '0xbde3d0e47627bf56282a0ab5d64eba133f0a4421',
+          // from: '0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6',
+          // fromLp: '0xbde3d0e47627bf56282a0ab5d64eba133f0a4421',
 
-          // address: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2', // Mock Token PI
-          // lpTokenAddress: '0xc5bad597236208fb2b022852664c135c259cb05a', // NTLP-PI
-          // NTLP-PI
-          to: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2',
-          toLp: '0xc5bad597236208fb2b022852664c135c259cb05a',
+          // // address: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2', // Mock Token PI
+          // // lpTokenAddress: '0xc5bad597236208fb2b022852664c135c259cb05a', // NTLP-PI
+          // // NTLP-PI
+          // to: '0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2',
+          // toLp: '0xc5bad597236208fb2b022852664c135c259cb05a',
 
-          fee: '10000',
+          // fee: '10000',
+
+          from: '0x549943e04f40284185054145c6E4e9568C1D3241',
+          fromLp: '0xa921077A331F36d80E44f914A7AB1b3c9Ea48A4A',
+          to: '0x6969696969696969696969696969696969696969',
+          toLp: '0xEa91132E79559Be0Fcd6b1237DED28a31a226644',
+          fee: '500',
         }}
       />
     </Widget>
@@ -97,7 +103,7 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  onlyChainId: 421614,
+  onlyChainId: 80094,
   // onlyChainId: 8453,
   // onlyChainId: 11155111,
   noUI: true,

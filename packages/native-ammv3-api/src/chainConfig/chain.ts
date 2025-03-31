@@ -12,4 +12,6 @@ export enum ChainId {
   OKCHAIN = 66,
 
   BASE = 8453,
+
+  BERACHAIN = 80094,
 }
