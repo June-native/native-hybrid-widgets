@@ -80,6 +80,13 @@ function usePaginatedTickQuery(
           poolAddress?.toLowerCase() ?? ''
         }","liquidityNet_not":0},"orderBy":"tickIdx"},"operationName":"Ticks"}`,
         method: 'POST',
+        headers:
+          chainId === ChainId.BERACHAIN
+            ? {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer 8537b0b51ae5a8474073019fedc65481',
+              }
+            : undefined,
       });
       const data = await response.json();
       return data.data as typeof ticksResponse;
