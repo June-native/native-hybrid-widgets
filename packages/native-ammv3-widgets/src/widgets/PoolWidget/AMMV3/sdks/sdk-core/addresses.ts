@@ -34,28 +34,26 @@ type ChainAddresses = {
   poolInitCodeHash: string;
 };
 
-// Networks that share most of the same addresses i.e. Mainnet, Goerli, Optimism, Arbitrum, Polygon
-const DEFAULT_ADDRESSES: ChainAddresses = {
-  v3CoreFactoryAddress: '0x3d2A7Bac4E8439ABe86B58324695e921a5FC0987',
-  nonfungiblePositionManagerAddress:
-    '0x483E5c0f309577f79b0a19cE65E332DD388aD7A8',
-  poolInitCodeHash:
-    '0x4509fa1e2d1989ac1632a56fe87c53e8d1e9d05847694e00f62b23e28cec98c4',
-};
 const MAINNET_ADDRESSES: ChainAddresses = {
-  v3CoreFactoryAddress: '0x1F98431c8aD98523631AE4a59f267346ea31F984',
+  v3CoreFactoryAddress: '0xB4cCd44D3bABe05DfC70b39944796d281AE905EE',
+  NativeV3PoolDeployer: '0x93c69485C572aca0467A395aF6f5c7FE49FCA83F',
   nonfungiblePositionManagerAddress:
-    '0xC36442b4a4522E871399CD717aBDD847Ab11FE88',
+    '0x6aab72787F7E9EE48c45fc97B0FD0F7B25F80cB9',
   theGraphUrl:
-    'https://gateway.thegraph.com/api/8537b0b51ae5a8474073019fedc65481/subgraphs/id/5zvR82QoaXYFyDEKLZ9t6v9adgnptxYpKpSbxtgVENFV',
+    'https://gateway.thegraph.com/api/subgraphs/id/6hXjt23gepeW56vJJTfQim1kVdm1bjEvqVZfu3tpGny6',
   poolInitCodeHash:
-    '0x4509fa1e2d1989ac1632a56fe87c53e8d1e9d05847694e00f62b23e28cec98c4',
+    '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
 
 const ARBITRUM_ONE_ADDRESSES: ChainAddresses = {
-  ...DEFAULT_ADDRESSES,
+  v3CoreFactoryAddress: '0xB4cCd44D3bABe05DfC70b39944796d281AE905EE',
+  NativeV3PoolDeployer: '0x93c69485C572aca0467A395aF6f5c7FE49FCA83F',
+  nonfungiblePositionManagerAddress:
+    '0x6aab72787F7E9EE48c45fc97B0FD0F7B25F80cB9',
   theGraphUrl:
-    'https://gateway.thegraph.com/api/8537b0b51ae5a8474073019fedc65481/subgraphs/id/FbCGRftH4a3yZugY7TnbYgPJVEv2LvMT6oF1fxPe9aJM',
+    'https://gateway.thegraph.com/api/subgraphs/id/m7jy1LL9aihKD7arZXwgkDHRoy1xp43LoVtPDuxVcjn',
+  poolInitCodeHash:
+    '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
 
 // sepolia v3 addresses
@@ -77,11 +75,14 @@ const ARBITRUM_SEPOLIA_ADDRESSES: ChainAddresses = {
 };
 
 const BSC_ADDRESSES: ChainAddresses = {
-  ...DEFAULT_ADDRESSES,
-};
-
-const OKCHAIN_ADDRESSES: ChainAddresses = {
-  ...DEFAULT_ADDRESSES,
+  v3CoreFactoryAddress: '0xB4cCd44D3bABe05DfC70b39944796d281AE905EE',
+  NativeV3PoolDeployer: '0x93c69485C572aca0467A395aF6f5c7FE49FCA83F',
+  nonfungiblePositionManagerAddress:
+    '0x6aab72787F7E9EE48c45fc97B0FD0F7B25F80cB9',
+  theGraphUrl:
+    'https://gateway.thegraph.com/api/subgraphs/id/8171zkXXXz6pv98vpRwnTUueKCU2eHuu9BMxT8UR8KbB',
+  poolInitCodeHash:
+    '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
 
 const BASE_ADDRESSES: ChainAddresses = {
@@ -101,7 +102,7 @@ const BERACHAIN_ADDRESSES: ChainAddresses = {
   nonfungiblePositionManagerAddress:
     '0x1112f006B25FFA661Bf2B0DcEcd4e4F5d0c794A3',
   theGraphUrl:
-    'https://api.studio.thegraph.com/query/106537/native-hybrid-berachain-mainnet/version/latest',
+    'https://gateway.thegraph.com/api/subgraphs/id/CZTvEDJA8jmCRJ9yLjeaBpKYTUVvVpz7qwSYJeoiaEM8',
   poolInitCodeHash:
     '0x6f4fcfea116711b167b87469b22333669e4ceb8f39b24bef28be93f45af8b70c',
 };
@@ -115,7 +116,6 @@ export const CHAIN_TO_ADDRESSES_MAP: Record<
   [ChainId.SEPOLIA]: SEPOLIA_ADDRESSES,
   [ChainId.ARBITRUM_SEPOLIA]: ARBITRUM_SEPOLIA_ADDRESSES,
   [ChainId.BSC]: BSC_ADDRESSES,
-  [ChainId.OKCHAIN]: OKCHAIN_ADDRESSES,
   [ChainId.BASE]: BASE_ADDRESSES,
   [ChainId.BERACHAIN]: BERACHAIN_ADDRESSES,
 };

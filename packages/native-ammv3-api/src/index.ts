@@ -18,7 +18,11 @@ export { default as RestApiRequests } from './helper/RestApiRequests';
 export { default as NonfungiblePositionManagerABI } from './helper/ContractRequests/abi/ABIs/NonfungiblePositionManager';
 export { AMMV3Api } from './services/ammv3';
 export type { TickData, Ticks } from './services/ammv3';
+export { SwapWidgetApi } from './services/SwapWidgetApi';
 
 export { TokenApi } from './services/TokenApi';
+
+export { SwapApi } from './services/swap/SwapApi';
+export { SystemApi } from './services/system/SystemApi';
 
 export type ExcludeNone<T> = NonNullable<T>;

@@ -68,6 +68,7 @@ export interface ConfigTokenList {
 interface TokenInfo {
   readonly chainId: number;
   readonly address: string;
+  readonly lpTokenAddress: string;
   readonly name: string;
   readonly decimals: number;
   readonly symbol: string;
@@ -140,6 +141,7 @@ export class SwapWidgetApi {
                     tokenList.push({
                       logoURI: token.logoImg,
                       ...token,
+                      lpTokenAddress: token.address,
                       chainId: token.chainId ?? chainId,
                       side,
                     });
@@ -150,6 +152,7 @@ export class SwapWidgetApi {
                   tokenList.push({
                     logoURI: token.logoImg,
                     ...token,
+                    lpTokenAddress: token.address,
                     chainId: token.chainId ?? chainId,
                     side,
                   });
