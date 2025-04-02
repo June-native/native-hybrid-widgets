@@ -24,7 +24,7 @@
     "release:local": "np --any-branch --no-cleanup --no-tests",
     "release.npm-publish": "npm publish --access public",
     "release.npm-publish-beta": "yarn run build && npm publish --tag beta",
-    "test": "jest src",
+    "test": "jest src --passWithNoTests",
     "test:e2e": "jest e2e"
   },
   "author": "",
