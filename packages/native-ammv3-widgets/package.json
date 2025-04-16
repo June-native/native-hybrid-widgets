@@ -1,6 +1,6 @@
 {
-  "name": "@native-ammv3/widgets",
-  "version": "0.0.22",
+  "name": "@june-native/native-hybrid-widgets",
+  "version": "0.0.24",
   "description": "NATIVE Widgets",
   "source": "src/index.tsx",
   "types": "dist/types/index.d.ts",
