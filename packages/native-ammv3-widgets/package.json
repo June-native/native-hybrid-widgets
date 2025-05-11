@@ -1,5 +1,5 @@
 {
-  "name": "@june-native/native-hybrid-widgets",
+  "name": "@native-ammv3/widgets",
   "version": "0.0.24",
   "description": "NATIVE Widgets",
   "source": "src/index.tsx",
