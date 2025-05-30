@@ -38,6 +38,9 @@ export function formatReadableNumber({
       !showDecimalsOnly &&
       !showIntegerOnly
     ) {
+      if (amount.lt(0.00001)) {
+        return '< 0.00001';
+      }
       return amount.toExponential();
     }
 
@@ -88,7 +91,7 @@ export function formatTokenAmountNumber({
   }
   const showDecimals =
     // eslint-disable-next-line no-nested-ternary
-    decimals === undefined ? 0 : decimals > 6 ? 6 : decimals > 4 ? 4 : decimals;
+    decimals === undefined ? 0 : decimals > 5 ? 5 : decimals > 4 ? 4 : decimals;
   return formatReadableNumber({
     input: source,
     showDecimals,

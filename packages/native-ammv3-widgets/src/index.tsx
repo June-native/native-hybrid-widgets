@@ -18,7 +18,9 @@ export type { Page } from './router';
 export {
   useV3Factory,
   useV3NFTPositionManagerContract,
+  useV3TheGraphUrl,
 } from './widgets/PoolWidget/AMMV3/hooks/useContract';
+export { computePoolAddressBySortedToken } from './widgets/PoolWidget/AMMV3/sdks/v3-sdk/utils/computePoolAddress';
 export { FeeAmount } from './widgets/PoolWidget/AMMV3/sdks/v3-sdk/constants';
 export type { PositionDetails } from './widgets/PoolWidget/AMMV3/types/position';
 

@@ -86,11 +86,11 @@ export const Primary = (props: any) => {
 
           // fee: '10000',
 
-          from: '0x549943e04f40284185054145c6E4e9568C1D3241',
-          fromLp: '0xa921077A331F36d80E44f914A7AB1b3c9Ea48A4A',
-          to: '0x6969696969696969696969696969696969696969',
-          toLp: '0xEa91132E79559Be0Fcd6b1237DED28a31a226644',
-          fee: '500',
+          from: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+          fromLp: '0x5994258Ec80Cc6853e2B6F047Ec6D213FE89B24b',
+          to: '0x1D88713b483A8E45cfF0e5CD7c2e15E5Fab4534d',
+          toLp: '0x66550d6453dbb70103b96fac81052f106d4fffeb',
+          fee: '3000',
         }}
       />
     </Widget>
@@ -103,7 +103,7 @@ Primary.args = {
   width: '100%',
   height: '100%',
   noDocumentLink: true,
-  onlyChainId: 80094,
+  onlyChainId: 1,
   // onlyChainId: 8453,
   // onlyChainId: 11155111,
   noUI: true,

@@ -36,9 +36,11 @@ export const Buttons = ({
   // we need an existence check on parsed amounts for single-asset deposits
   const showApprovalA =
     (approvalA.needApprove && !!parsedAmounts[Field.CURRENCY_A]) ||
+    approvalA.needReset ||
     approvalA.isApproving;
   const showApprovalB =
     (approvalB.needApprove && !!parsedAmounts[Field.CURRENCY_B]) ||
+    approvalB.needReset ||
     approvalB.isApproving;
 
   return (
@@ -103,7 +105,9 @@ export const Buttons = ({
           disabled={
             !isValid ||
             (approvalA.needApprove && !depositADisabled) ||
-            (approvalB.needApprove && !depositBDisabled)
+            (approvalB.needApprove && !depositBDisabled) ||
+            approvalA.needReset ||
+            approvalB.needReset
           }
           danger={
             !isValid &&

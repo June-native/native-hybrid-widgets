@@ -85,12 +85,12 @@ export const Primary = (props: any) => {
         // token0Address="0x4200000000000000000000000000000000000006"
         // token1Address="0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
         // feeAmount={500}
-        token0Address="0xC1A6573F0e9A9eC7BaD6815Bd1403F12D98055c6"
-        token0LpAddress="0xbde3d0e47627bf56282a0ab5d64eba133f0a4421"
-        token1Address="0xE11C25Ec4E6f74Ddfeb41FEccB050d63153340c2"
-        token1LpAddress="0xc5bad597236208fb2b022852664c135c259cb05a"
-        feeAmount={10000}
-        viewType="claim"
+        token0Address="0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        token0LpAddress="0x5994258Ec80Cc6853e2B6F047Ec6D213FE89B24b"
+        token1Address="0x1D88713b483A8E45cfF0e5CD7c2e15E5Fab4534d"
+        token1LpAddress="0x66550d6453dbb70103b96fac81052f106d4fffeb"
+        feeAmount={3000}
+        viewType="add-remove"
         // viewType="add-remove"
         onClose={() => window.alert('onClose')}
         handleGoToAddLiquidityV3={() =>
@@ -108,7 +108,7 @@ Primary.args = {
   height: '100%',
   noDocumentLink: true,
   noUI: true,
-  onlyChainId: 421614,
+  onlyChainId: 1,
   // onlyChainId: 8453,
   // onlyChainId: 11155111,
 };

@@ -184,8 +184,6 @@ export function usePoolActiveLiquidity(
     // find where the active tick would be to partition the array
     // if the active tick is initialized, the pivot will be an element
     // if not, take the previous tick as pivot
-    console.log('v2 ticks', ticks);
-    console.log('v2 activeTick', activeTick);
     const pivot =
       ticks.findIndex(
         (tickData) =>

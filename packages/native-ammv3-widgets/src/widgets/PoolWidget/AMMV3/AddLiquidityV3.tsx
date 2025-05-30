@@ -39,6 +39,7 @@ import { Bound, Field } from './types';
 import { convertBackToTokenInfo } from './utils';
 import { maxAmountSpend } from './utils/maxAmountSpend';
 import { toSlippagePercent } from './utils/slippage';
+import { PartRangeSelector } from './components/PartRangeSelector';
 
 export default function AddLiquidityV3({
   params,
@@ -215,18 +216,39 @@ export default function AddLiquidityV3({
     dispatch,
   });
 
-  const handleSetFullRange = useCallback(() => {
-    getSetFullRange();
+  const handleSetFullRange = useCallback(
+    (part: number) => {
+      getSetFullRange();
 
-    const minPrice = pricesAtLimit[Bound.LOWER];
-    if (minPrice) {
-      onLeftRangeInput(minPrice.toSignificant(5));
-    }
-    const maxPrice = pricesAtLimit[Bound.UPPER];
-    if (maxPrice) {
-      onRightRangeInput(maxPrice.toSignificant(5));
-    }
-  }, [getSetFullRange, onLeftRangeInput, onRightRangeInput, pricesAtLimit]);
+      if (part !== 1) {
+        if (formattedPrice) {
+          const currentPrice = new BigNumber(formattedPrice);
+          const minPrice = currentPrice.multipliedBy(1 - part);
+          const maxPrice = currentPrice.multipliedBy(1 + part);
+          onLeftRangeInput(minPrice.dp(5, BigNumber.ROUND_DOWN).toString());
+          onRightRangeInput(maxPrice.dp(5, BigNumber.ROUND_DOWN).toString());
+        }
+
+        return;
+      }
+
+      const minPrice = pricesAtLimit[Bound.LOWER];
+      if (minPrice) {
+        onLeftRangeInput(minPrice.toSignificant(5));
+      }
+      const maxPrice = pricesAtLimit[Bound.UPPER];
+      if (maxPrice) {
+        onRightRangeInput(maxPrice.toSignificant(5));
+      }
+    },
+    [
+      formattedPrice,
+      getSetFullRange,
+      onLeftRangeInput,
+      onRightRangeInput,
+      pricesAtLimit,
+    ],
+  );
 
   const { deadLine: ddl } = useUserOptions();
   const onAddMutation = useMutation({
@@ -282,6 +304,7 @@ export default function AddLiquidityV3({
         );
         if (succ === ExecutionResult.Success) {
           setTimeout(() => {
+            setShowConfirm(false);
             handleGoToPoolList();
           }, 100);
         }
@@ -398,6 +421,7 @@ export default function AddLiquidityV3({
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'space-between',
               gap: 8,
               flexWrap: 'wrap',
             }}
@@ -413,76 +437,43 @@ export default function AddLiquidityV3({
               {t`Set price range`}
             </Box>
             {Boolean(state.baseToken && state.quoteToken) && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  width: '100%',
-                  [theme.breakpoints.up('tablet')]: {
-                    ml: 'auto',
-                    width: 'auto',
-                  },
-                }}
-              >
-                <Button
-                  size={Button.Size.small}
-                  variant={Button.Variant.outlined}
-                  onClick={handleSetFullRange}
-                  sx={{
-                    py: 4,
-                    px: 12,
-                    height: 26,
-                    typography: 'h6',
-                    fontWeight: 600,
-                    borderColor: '#1C241C1A',
-                    ...(isMobile
-                      ? {
-                          flexGrow: 0,
-                          flexShrink: 1,
-                          flexBasis: '50%',
-                        }
-                      : undefined),
-                  }}
-                >{t`Full range`}</Button>
-                <RateToggle
-                  baseToken={state.baseToken}
-                  quoteToken={state.quoteToken}
-                  handleRateToggle={() => {
-                    if (
-                      !ticksAtLimit[Bound.LOWER] &&
-                      !ticksAtLimit[Bound.UPPER]
-                    ) {
-                      onLeftRangeInput(
-                        (invertPrice
-                          ? priceLower
-                          : priceUpper?.invert()
-                        )?.toSignificant(6) ?? '',
-                      );
-                      onRightRangeInput(
-                        (invertPrice
-                          ? priceUpper
-                          : priceLower?.invert()
-                        )?.toSignificant(6) ?? '',
-                      );
-                      onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
-                    }
-                    dispatch({
-                      type: Types.ToggleRate,
-                      payload: undefined,
-                    });
-                  }}
-                  sx={
-                    isMobile
-                      ? {
-                          flexGrow: 0,
-                          flexShrink: 1,
-                          flexBasis: '50%',
-                        }
-                      : undefined
+              <RateToggle
+                baseToken={state.baseToken}
+                quoteToken={state.quoteToken}
+                handleRateToggle={() => {
+                  if (
+                    !ticksAtLimit[Bound.LOWER] &&
+                    !ticksAtLimit[Bound.UPPER]
+                  ) {
+                    onLeftRangeInput(
+                      (invertPrice
+                        ? priceLower
+                        : priceUpper?.invert()
+                      )?.toSignificant(6) ?? '',
+                    );
+                    onRightRangeInput(
+                      (invertPrice
+                        ? priceUpper
+                        : priceLower?.invert()
+                      )?.toSignificant(6) ?? '',
+                    );
+                    onFieldAInput(formattedAmounts[Field.CURRENCY_B] ?? '');
                   }
-                />
-              </Box>
+                  dispatch({
+                    type: Types.ToggleRate,
+                    payload: undefined,
+                  });
+                }}
+                sx={
+                  isMobile
+                    ? {
+                        flexGrow: 0,
+                        flexShrink: 1,
+                        flexBasis: '50%',
+                      }
+                    : undefined
+                }
+              />
             )}
           </Box>
           <RangeSelector
@@ -499,6 +490,14 @@ export default function AddLiquidityV3({
             feeAmount={state.feeAmount}
             ticksAtLimit={ticksAtLimit}
           />
+
+          {state.feeAmount && (
+            <PartRangeSelector
+              handleSetFullRange={handleSetFullRange}
+              feeAmount={state.feeAmount}
+            />
+          )}
+
           {outOfRange && (
             <YellowCard>
               {t`Your position will not earn fees or be used in trades until the market price moves into your range.`}
@@ -564,7 +563,8 @@ export default function AddLiquidityV3({
             >
               {t`Current price`}
               <Box>
-                {formattedPrice}&nbsp;{t`per`}&nbsp;
+                {formattedPrice}&nbsp;{state.quoteToken?.symbol ?? ''}
+                &nbsp;per&nbsp;
                 {state.baseToken?.symbol ?? ''}
               </Box>
             </Box>

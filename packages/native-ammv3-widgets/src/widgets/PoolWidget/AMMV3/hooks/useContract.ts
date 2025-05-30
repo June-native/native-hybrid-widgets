@@ -16,3 +16,9 @@ export function useV3Factory(chainId: ChainId | undefined) {
 
   return contract;
 }
+
+export function useV3TheGraphUrl(chainId: ChainId | undefined) {
+  const url = chainId ? CHAIN_TO_ADDRESSES_MAP[chainId].theGraphUrl : undefined;
+
+  return url;
+}

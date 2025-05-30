@@ -406,20 +406,30 @@ export abstract class NonfungiblePositionManager {
   ): MethodParameters {
     const calldatas: string[] =
       NonfungiblePositionManager.encodeCollect(options);
+      
+    // prevent claiming when both the amounts are zero
+    invariant(
+      !JSBI.EQ(options.expectedCurrencyOwed0.quotient, ZERO) || !JSBI.EQ(options.expectedCurrencyOwed1.quotient, ZERO),
+      'NO_TOKEN_BEING_CLAIMED',
+    );
 
-    // redeem
-    calldatas.push(
-      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
-        redeemOptions.token0,
-        redeemOptions.recipient,
-      ]),
-    );
-    calldatas.push(
-      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
-        redeemOptions.token1,
-        redeemOptions.recipient,
-      ]),
-    );
+    // redeem only when the amount is not zero to prevent reverts
+    if (!JSBI.EQ(options.expectedCurrencyOwed0.quotient, ZERO)) {
+      calldatas.push(
+        NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+          redeemOptions.token0,
+          redeemOptions.recipient,
+        ]),
+      );
+    }
+    if (!JSBI.EQ(options.expectedCurrencyOwed1.quotient, ZERO)) {
+      calldatas.push(
+        NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+          redeemOptions.token1,
+          redeemOptions.recipient,
+        ]),
+      );
+    }
 
     return {
       calldata: Multicall.encodeMulticall(calldatas),
@@ -458,6 +468,16 @@ export abstract class NonfungiblePositionManager {
     // slippage-adjusted underlying amounts
     const { amount0: amount0Min, amount1: amount1Min } =
       partialPosition.burnAmountsWithSlippage(options.slippageTolerance);
+
+    // get the expected currency owed
+    const expectedAmount0 = CurrencyAmount.fromRawAmount(
+      partialPosition.pool.token0,
+      amount0Min,
+    );
+    const expectedAmount1 = CurrencyAmount.fromRawAmount(
+      partialPosition.pool.token1,
+      amount1Min,
+    );
 
     if (options.permit) {
       calldatas.push(
@@ -510,19 +530,29 @@ export abstract class NonfungiblePositionManager {
       }),
     );
 
-    // redeem
-    calldatas.push(
-      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
-        position.pool.token0.lpTokenAddress,
-        options.redeemOptions.recipient,
-      ]),
+    // prevent removing liquidity when both the amounts are zero
+    invariant(
+      !JSBI.EQ(expectedAmount0.quotient, ZERO) || !JSBI.EQ(expectedAmount1.quotient, ZERO),
+      'NO_TOKEN_BEING_REMOVE_OUT',
     );
-    calldatas.push(
-      NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
-        position.pool.token1.lpTokenAddress,
-        options.redeemOptions.recipient,
-      ]),
-    );
+
+    // redeem only when the amount is not zero to prevent reverts
+    if (!JSBI.EQ(expectedAmount0.quotient, ZERO)) {
+      calldatas.push(
+        NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+          position.pool.token0.lpTokenAddress,
+          options.redeemOptions.recipient,
+        ]),
+      );
+    }
+    if (!JSBI.EQ(expectedAmount1.quotient, ZERO)) {
+      calldatas.push(
+        NonfungiblePositionManager.INTERFACE.encodeFunctionData('redeem', [
+          position.pool.token1.lpTokenAddress,
+          options.redeemOptions.recipient,
+        ]),
+      );
+    }
 
     if (options.liquidityPercentage.equalTo(ONE)) {
       if (options.burnToken) {

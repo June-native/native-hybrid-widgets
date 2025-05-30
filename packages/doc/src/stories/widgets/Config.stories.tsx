@@ -34,7 +34,7 @@ export const Primary = ({
 };
 
 Primary.args = {
-  projectId: 'project2',
+  projectId: 'NativeHybrid',
   apiKey: '48e1f12302a853755e',
-  onlyChainId: 167000,
+  onlyChainId: 1,
 };

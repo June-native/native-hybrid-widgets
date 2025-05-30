@@ -5,6 +5,36 @@ import { CHAIN_TO_ADDRESSES_MAP, ChainId } from '../../sdk-core';
 import { Token } from '../../sdk-core/entities/token';
 import { FeeAmount } from '../constants';
 
+export function computePoolAddressBySortedToken({
+  token0,
+  token1,
+  fee,
+  chainId,
+}: {
+  token0: string;
+  token1: string;
+  fee: FeeAmount;
+  chainId: ChainId;
+}) {
+  const salt = keccak256(
+    ['bytes'],
+    [
+      defaultAbiCoder.encode(
+        ['address', 'address', 'uint24'],
+        [token0, token1, fee],
+      ),
+    ],
+  );
+  const { poolInitCodeHash, v3CoreFactoryAddress, NativeV3PoolDeployer } =
+    CHAIN_TO_ADDRESSES_MAP[chainId];
+
+  return getCreate2Address(
+    NativeV3PoolDeployer ?? v3CoreFactoryAddress,
+    salt,
+    poolInitCodeHash,
+  );
+}
+
 /**
  * Computes a pool address
  * @param factoryAddress The Uniswap V3 factory address
@@ -29,21 +59,11 @@ export function computePoolAddress({
   const [token0, token1] = tokenA.sortsBefore(tokenB)
     ? [tokenA, tokenB]
     : [tokenB, tokenA]; // does safety checks
-  const salt = keccak256(
-    ['bytes'],
-    [
-      defaultAbiCoder.encode(
-        ['address', 'address', 'uint24'],
-        [token0.lpTokenAddress, token1.lpTokenAddress, fee],
-      ),
-    ],
-  );
-  const { poolInitCodeHash, v3CoreFactoryAddress, NativeV3PoolDeployer } =
-    CHAIN_TO_ADDRESSES_MAP[chainId];
 
-  return getCreate2Address(
-    NativeV3PoolDeployer ?? v3CoreFactoryAddress,
-    salt,
-    poolInitCodeHash,
-  );
+  return computePoolAddressBySortedToken({
+    token0: token0.lpTokenAddress,
+    token1: token1.lpTokenAddress,
+    fee,
+    chainId,
+  });
 }

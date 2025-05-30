@@ -251,11 +251,11 @@ msgstr "Creation Time"
 msgid "The current network is inconsistent with the wallet - please switch in wallet"
 msgstr "The current network is inconsistent with the wallet - please switch in wallet"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:413
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:437
 msgid "Set price range"
 msgstr "Set price range"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:447
+#: src/widgets/PoolWidget/AMMV3/components/PartRangeSelector.tsx:55
 msgid "Full range"
 msgstr "Full range"
 
@@ -373,7 +373,7 @@ msgstr "Please confirm in wallet"
 msgid "Success Rate"
 msgstr "Success Rate"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:271
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:293
 #: src/widgets/PoolWidget/PoolCreate/operate-widgets/BottomButtonGroup.tsx:339
 msgid "Pool Creation"
 msgstr "Pool Creation"
@@ -531,12 +531,12 @@ msgstr "Done"
 msgid "Results in a relatively fixed price."
 msgstr "Results in a relatively fixed price."
 
-#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:72
-#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:88
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:74
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:90
 msgid "Approving {0}..."
 msgstr "Approving {0}..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:565
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:564
 msgid "Current price"
 msgstr "Current price"
 
@@ -806,7 +806,7 @@ msgstr "Stake"
 msgid "Fetching best price..."
 msgstr "Fetching best price..."
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:509
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:508
 msgid "Invalid range selected. The min price must be lower than the max price."
 msgstr "Invalid range selected. The min price must be lower than the max price."
 
@@ -1326,7 +1326,7 @@ msgstr "End mining"
 msgid "When adding rewards, the number of rewards for a single block may be adjusted"
 msgstr "When adding rewards, the number of rewards for a single block may be adjusted"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:534
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:533
 msgid "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 msgstr "This pool must be initialized before you can add liquidity. To initialize, select a starting price for the pool. Then, enter your liquidity price range and deposit amount. Gas fees will be higher than usual due to the initialization transaction."
 
@@ -1483,13 +1483,9 @@ msgstr "Minutes"
 msgid "Off"
 msgstr "Off"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:504
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:503
 msgid "Your position will not earn fees or be used in trades until the market price moves into your range."
 msgstr "Your position will not earn fees or be used in trades until the market price moves into your range."
-
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:567
-msgid "per"
-msgstr "per"
 
 #: src/widgets/PoolWidget/PoolCreate/hooks/useSlippageCoefficientList.ts:58
 msgid "Suitable for stablecoins with price fluctuations within 10%"
@@ -2048,7 +2044,7 @@ msgstr "APY"
 msgid "AMM V2"
 msgstr "AMM V2"
 
-#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:114
+#: src/widgets/PoolWidget/AMMV3/components/Buttons.tsx:118
 msgid "Preview"
 msgstr "Preview"
 
@@ -2306,7 +2302,7 @@ msgstr "Claim Rewards"
 msgid "My Pools (PMM)"
 msgstr "My Pools (PMM)"
 
-#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:523
+#: src/widgets/PoolWidget/AMMV3/AddLiquidityV3.tsx:522
 msgid "Starting price"
 msgstr "Starting price"
 

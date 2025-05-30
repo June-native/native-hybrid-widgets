@@ -30,13 +30,6 @@ export const basicTokenMap: {
     wrappedTokenSymbol: 'WBNB',
     wrappedTokenAddress: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
   },
-  [ChainId.OKCHAIN]: {
-    ...DEFAULT_BASIC_TOKEN,
-    symbol: 'OKT',
-    name: 'OKT',
-    wrappedTokenSymbol: 'WOKT',
-    wrappedTokenAddress: '0x8F8526dbfd6E38E3D8307702cA8469Bae6C56C15',
-  },
   [ChainId.ARBITRUM_ONE]: {
     ...DEFAULT_BASIC_TOKEN,
     name: 'Ethereum',

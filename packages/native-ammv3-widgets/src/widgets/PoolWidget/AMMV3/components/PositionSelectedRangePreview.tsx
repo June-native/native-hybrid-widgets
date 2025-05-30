@@ -135,6 +135,8 @@ export const PositionSelectedRangePreview = ({
                 atLimit: ticksAtLimit,
                 direction: Bound.LOWER,
               })}
+              &nbsp;{quoteCurrency?.symbol}&nbsp;per&nbsp;
+              {baseCurrency?.symbol}
             </Box>
           </Box>
         </Box>
@@ -183,6 +185,8 @@ export const PositionSelectedRangePreview = ({
                 atLimit: ticksAtLimit,
                 direction: Bound.UPPER,
               })}
+              &nbsp;{quoteCurrency?.symbol}&nbsp;per&nbsp;
+              {baseCurrency?.symbol}
             </Box>
           </Box>
         </Box>
@@ -217,9 +221,11 @@ export const PositionSelectedRangePreview = ({
                 fontWeight: 500,
               }}
             >
-              {`${formatTokenAmountNumber({
+              {formatTokenAmountNumber({
                 input: price.toSignificant(),
-              })} `}
+              })}
+              &nbsp;{quoteCurrency?.symbol}&nbsp;per&nbsp;
+              {baseCurrency?.symbol}
             </Box>
           </Box>
         </Box>

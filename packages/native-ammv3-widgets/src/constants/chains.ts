@@ -20,10 +20,6 @@ export const rpcServerMap: {
     'https://rpc.ankr.com/arbitrum',
   ],
   [ChainId.ARBITRUM_SEPOLIA]: ['https://sepolia-rollup.arbitrum.io/rpc'],
-  [ChainId.OKCHAIN]: [
-    'https://exchainrpc.okex.org',
-    'https://okc-mainnet.gateway.pokt.network/v1/lb/6275309bea1b320039c893ff',
-  ],
   [ChainId.SEPOLIA]: ['https://ethereum-sepolia-rpc.publicnode.com'],
   [ChainId.BASE]: ['https://mainnet.base.org'],
   [ChainId.BERACHAIN]: ['https://rpc.berachain.com'],
@@ -52,7 +48,6 @@ export const scanUrlDomainMap: {
 } = {
   [ChainId.MAINNET]: 'etherscan.io',
   [ChainId.BSC]: 'bscscan.com',
-  [ChainId.OKCHAIN]: 'www.oklink.com/okexchain',
   [ChainId.BASE]: 'basescan.org',
   [ChainId.BERACHAIN]: 'berascan.com',
   [ChainId.ARBITRUM_ONE]: 'arbiscan.io',
@@ -67,7 +62,6 @@ export const ThegraphKeyMap: {
   [ChainId.MAINNET]: 'ethereum-mainnet',
   [ChainId.ARBITRUM_ONE]: 'arbitrum',
   [ChainId.ARBITRUM_SEPOLIA]: 'arb-sep',
-  [ChainId.OKCHAIN]: 'okchain',
   [ChainId.SEPOLIA]: 'sepolia',
   [ChainId.BASE]: 'base',
   [ChainId.BERACHAIN]: 'berachain',
